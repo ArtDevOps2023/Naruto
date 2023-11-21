@@ -1,0 +1,66 @@
+type Query {
+	employees: [Employee]
+    employeeById(id: ID): Employee
+}
+
+type Mutation {
+	upsertEmployee(form: EmployeeForm): Employee
+	deleteEmployee(id: ID!): Boolean
+}
+
+type Employee {
+    id: ID
+    firstName: String
+    lastName: String
+    middleName: String
+    birthdate: String
+    gender: String
+    maritalStatus: String
+    companyPosition: String
+    dateHired: String
+	age: Int
+	yearsOfExperience: Int
+	contacts: [Contact]
+	addresses: [Address]
+}
+
+type Contact {
+	id: ID
+	contactNo: String
+	isPrimary: Boolean
+}
+
+type Address {
+	id: ID
+	address1: String
+	address2: String
+	isPrimary: Boolean
+}
+
+
+input EmployeeForm {
+    id: ID
+    firstName: String!
+    lastName: String!
+    middleName: String!
+    birthdate: String!
+    gender: String!
+    maritalStatus: String!
+    companyPosition: String!
+    dateHired: String!
+	contacts: [ContactInput]
+	addresses: [AddressInput]
+}
+
+input ContactInput {
+	id: ID
+	contactNo: String
+	isPrimary: Boolean
+}
+
+input AddressInput {
+	id: ID
+	address1: String
+	address2: String
+	isPrimary: Boolean
+}
