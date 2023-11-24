@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.lmph.be.form.EmployeeForm;
+import com.lmph.be.form.SectionForm;
+import com.lmph.be.form.SubsectionForm;
 
 /**
  * Index Controller class
@@ -82,5 +84,38 @@ public class IndexController {
 	public String form(@PathVariable Long id, @ModelAttribute("form") EmployeeForm form) {
 		form.setId(id);		
 		return "employee_form";
+	}
+	
+	/**
+	 * Onboarding page
+	 * @return
+	 */
+	@GetMapping("/onboarding")
+	public String onboarding() {
+		return "onboarding";
+	}
+	
+	/**
+	 * Display Sections and Add Section form
+	 * @param form
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	@GetMapping("/onboarding/section")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String form(@ModelAttribute("sectionForm") SectionForm sectionForm) {
+		return "section_form";
+	}
+	
+	/**
+	 * Add Subsection form
+	 * @param section_id
+	 * @param form
+	 * @return
+	 */
+	@GetMapping("/onboarding/section/{section_id}/subsection")
+	public String form(@PathVariable Long section_id, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
+		//subsectionForm.setId(section_id);		
+		return "subsection_form";
 	}
 }

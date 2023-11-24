@@ -6,6 +6,10 @@ type Query {
 type Mutation {
 	upsertEmployee(form: EmployeeForm): Employee
 	deleteEmployee(id: ID!): Boolean
+	upsertSection(form: SectionForm): Section
+	deleteSection(section_id: ID!): Boolean
+	upsertSubsection(form: SubsectionForm): Subsection
+	deleteSubsection(subsection_id: ID!): Boolean
 }
 
 type Employee {
@@ -37,6 +41,22 @@ type Address {
 	isPrimary: Boolean
 }
 
+type Section {
+	section_id: ID
+	name: String
+	color: String
+}
+
+type Subsection {
+	subsection_id: ID
+	section_id: ID
+	description: String
+	facilitator: String
+	details: String
+	target_day: String
+	target_sprint: String
+}
+
 
 input EmployeeForm {
     id: ID
@@ -63,4 +83,20 @@ input AddressInput {
 	address1: String
 	address2: String
 	isPrimary: Boolean
+}
+
+input SectionForm {
+	section_id: ID
+	name: String!
+	color: String!
+}
+
+input SubsectionForm {
+	subsection_id: ID
+	section_id: ID
+	description: String!
+	facilitator: String
+	details: String
+	target_day: String
+	target_sprint: String
 }
