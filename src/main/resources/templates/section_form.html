@@ -119,13 +119,14 @@
 								<div class="p-3 my-3 border">
 									<div class="row">
 										<div class="col-6">
-											<form id="sectionForm" method="post" action="/onboarding/post" th:object="${sectionForm}">
+											<form id="sectionForm" method="post" action="/onboarding/section/post" th:object="${sectionForm}">
+												<input type="hidden" name="sectionId" id="sectionId" th:value="${sectionForm.sectionId}" />
 												<div class="row mb-3">
 													<div class="col-3">
 												  		<label for="name" class="form-label">Section Name</label>
 													</div>
 													<div class="col-9">
-													  	<input type="text" class="form-control" id="name" name="name" th:value="${sectionForm.name}" placeholder="Section Name" />
+													  	<input type="text" class="form-control" id="name" name="name" th:value="${sectionForm.name}" placeholder="Section Name" required/>
 													  	<div class="mt-2 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Section Name Error</div>
 													</div>
 												</div>
@@ -134,10 +135,10 @@
 												  		<label for="color" class="form-label">Section Color</label>
 													</div>
 													<div class="col-9">
-													  	<select class="form-control" id="color" name="color">
+													  	<select class="form-control" id="color" name="color" required>
 															<option value="">Select</option>
 														  	<option th:each="enum : ${sectionForm.sectionColors.values()}" 
-																  th:value="${enum}" th:text="${enum.color}"
+																  th:value="${enum}" th:text="${enum.label}"
 																  th:selected="${sectionForm.color==enum.toString()}">
 															</option>
 													  	</select>
@@ -145,9 +146,14 @@
 													</div>
 												</div>
 											</form>
-											<div class="mb-3">
+											<div class="mb-3" th:unless="${sectionForm.sectionId != null}">
 												<div sec:authorize="hasRole('ROLE_ADMIN')">
-						                            <button id="btnActionSubmit" class="btn btn-primary px-4 float-right">Add Section</button>
+						                            <button id="btnActionAdd" class="btn btn-primary px-4 float-right">Add Section</button>
+					                            </div>
+					                        </div>
+					                        <div class="mb-3" th:if="${sectionForm.sectionId != null}">
+												<div sec:authorize="hasRole('ROLE_ADMIN')">
+						                            <button id="btnActionUpdate" class="btn btn-primary px-4 float-right">Update Section</button>
 					                            </div>
 					                        </div>
 										</div>
@@ -155,10 +161,10 @@
 								</div>
 								<hr/>
 								<div>
-									<table class="table table-bordered">
+									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
   										<thead style="background-color: #d3d3d3">
 										    <tr>
-										      <th scope="col">#</th>
+										      <th scope="col">ID#</th>
 										      <th scope="col">Section Name</th>
 										      <th scope="col">Color</th>
 										      <th scope="col">Created By</th>
@@ -166,141 +172,16 @@
 										    </tr>
   										</thead>
   										<tbody>
-										    <tr>
-										      <th scope="row">1</th>
-										      <td>Access Setup</td>
-										      <td>Green</td>
-										      <td>Admin</td>
-										      <td><a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/1/subsection" class="btn btn-primary px-4">Add Subsection</a></td>
-										    </tr>
-										    <tr>
-										      <th scope="row">2</th>
-										      <td>HR Processes</td>
-										      <td>Green</td>
-										      <td>Admin</td>
-										      <td><a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/2/subsection" class="btn btn-primary px-4">Add Subsection</a></td>
-										    </tr>
-										    <tr>
-										      <th scope="row">3</th>
-										      <td>Backend Exam</td>
-										      <td>Yellow</td>
-										      <td>Admin</td>
-										      <td><a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/3/subsection" class="btn btn-primary px-4">Add Subsection</a></td>
-										    </tr>
+											<tr>
+												<td colspan="5" class="text-center">
+													No records found.
+												</td>
+											</tr>
   										</tbody>
 									</table>
 								</div>
 								<hr/>
-								<!--
-								<div>
-									<table class="table table-bordered">
-  										<thead style="background-color: #d3d3d3">
-										    <tr>
-										      <th scope="col">#</th>
-										      <th scope="col">Subsection</th>
-										      <th scope="col">Facilitator/POC</th>
-										      <th scope="col">Details & References</th>
-										      <th scope="col">Target Day(s)</th>
-										      <th scope="col">Target Sprint(s)</th>
-										    </tr>
-  										</thead>
-  										<tbody>
-										    <tr>
-										      <th scope="row">1</th>
-										      <td>LegalMatch Email + MS Teams</td>
-										      <td>Sys Admin/IT</td>
-										      <td>Attendance Notifications (SOP)</td>
-										      <td>Day 0</td>
-										      <td>Sprint 0</td>
-										    </tr>
-										    <tr>
-										      <th scope="row">2</th>
-										      <td>Clockitportal Credentials (sent via email)</td>
-										      <td>Practice Lead	</td>
-										      <td>&nbsp;</td>
-										      <td>Day 1</td>
-										      <td>Sprint 1</td>
-										    </tr>
-										    <tr>
-										      <th scope="row">3</th>
-										      <td>IT processes/support</td>
-										      <td>Sys Admin/IT</td>
-										      <td>&nbsp;</td>
-										      <td>Day 2</td>
-										      <td>Sprint 2</td>
-										    </tr>
-  										</tbody>
-									</table>
-								</div>
-								<hr/>
-								
-								<div class="p-3 my-3 border">
-									<div class="row mb-3">
-										<div class="col-6">
-				                        	<h5 class="h5 text-gray">Subsection</h5>
-										</div>
-				                    </div>
-		                            <div class="row mb-3">
-										<div class="col-6 ml-3">
-											<div class="row mb-3">
-												<div class="col-3">
-											  		<label for="description" class="form-label">Description</label>
-												</div>
-												<div class="col-9">
-												  	<textarea class="form-control" id="description" name="description" th:value="${form.description}" placeholder="Description" rows="3"></textarea>
-													<div class="mt-2 text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</div>
-												</div>
-											</div>
-											
-											<div class="row mb-3">
-												<div class="col-3">
-											  		<label for="facilitator" class="form-label">Facilitator</label>
-												</div>
-												<div class="col-9">
-												  	<input type="text" class="form-control" id="facilitator" name="facilitator" th:value="${form.facilitator}" placeholder="Facilitator"/>
-												  	<div class="mt-2 text-danger" th:if="${#fields.hasErrors('facilitator')}" th:errors="*{facilitator}">Facilitator Error</div>
-												</div>
-											</div>
-											
-											<div class="row mb-3">
-											  	<div class="col-3">
-													  <label for="details" class="form-label">Details</label>
-											  	</div>
-											  	<div class="col-9">
-											  		<input type="text" class="form-control" id="details" name="details" th:value="${form.details}" placeholder="Details"/>
-													<div class="mt-2 text-danger" th:if="${#fields.hasErrors('details')}" th:errors="*{details}">Details Error</div>
-											  	</div>
-											</div>
-											
-											<div class="row mb-3">
-											  	<div class="col-3">
-												  	<label for="target_day" class="form-label">Target Day</label>
-											  	</div>
-											  	<div class="col-9">
-											  		<input type="text" class="form-control" id="target_day" name="target_day" th:value="${form.target_day}" placeholder="Target Day">
-													<div class="mt-2 text-danger" th:if="${#fields.hasErrors('target_day')}" th:errors="*{target_day}">Target Day Error</div>
-											  	</div>
-											</div>
-											
-											<div class="row mb-3">
-											  	<div class="col-3">
-												  	<label for="target_sprint" class="form-label">Target Sprint</label>
-											  	</div>
-											  	<div class="col-9">
-											  		<input type="text" class="form-control" id="target_sprint" name="target_sprint" th:value="${form.target_sprint}" placeholder="Target Sprint">
-													<div class="mt-2 text-danger" th:if="${#fields.hasErrors('target_sprint')}" th:errors="*{target_sprint}">Target Sprint Error</div>
-											  	</div>
-											</div>
-											
-										</div>
-									</div>
-									<div class="row mb-3">
-										<div class="col-6">
-											<button id="" class="btn btn-primary px-4 float-right">Add Subsection</button>
-										</div>
-									</div>
-								</div>
-								-->
+								 
                             
                         </div>
                     </div>
@@ -342,6 +223,7 @@
     <script src="/js/sectionService.js"></script>
 
 	<script>
+		const SECTION_ID = "[[${sectionForm.sectionId}]]";
 		const app = () => {
 			
 			const ROLE_ADMIN = "admin";
@@ -350,17 +232,78 @@
 			const isAdmin = () => roles.find( r => r == ROLE_ADMIN)
 			
 			const loadInit = () => {
-				$('#btnActionSubmit').click( async () => {
+				const fetchAllSections = sectionService().fetchAllSections();
+				
+				fetchAllSections.done(function(result) {
+					if (result.data) {
+						populate(result.data.section);
+						
+						if (SECTION_ID !== undefined || SECTION_ID !== null) {
+							//this is edit perspective
+							populateSectionForm(result.data.section, SECTION_ID);
+						}
+					}
+				});	
+				
+				$('#btnActionAdd').click( async () => {
 					const sectionForm = document.querySelector('#sectionForm');
-					const result = await sectionService().upsert(sectionForm);
+					const result = await sectionService().upsert(sectionForm,0);
 					document.location.href="/onboarding/section";
+				});
+				
+				$('#btnActionUpdate').click( async () => {
+					const sectionForm = document.querySelector('#sectionForm');
+					const result = await sectionService().upsert(sectionForm,SECTION_ID);
+					document.location.href="/onboarding/section";
+				});
+				
+				
+			}
+			
+			const populate = (sectionList) => {
+				const table = $("#dataTable");
+				table.find("tbody").empty();
+				
+				sectionList.forEach( section => {
+					table.find("tbody").append(
+						`
+						<tr>
+					      	<td>${section.sectionId}</td>
+					      	<td>${section.name}</td>
+					      	<td>${section.colorDescription}</td>
+					      	<td>Admin</td>
+					      	<td>
+							  <a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}/subsection" class="btn btn-primary px-4">Add Subsection</a>
+							  <a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}" class="btn btn-primary px-4">Edit</a>
+							  <button onclick="deleteSection('${section.sectionId}')" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary px-4">Delete</button>
+							</td>
+					    </tr>
+						`
+					);
 				});
 			}
 			
-		 
+			const populateSectionForm = (sectionList, sectionId) => {
+				const form = $('#sectionForm');
+				const formElement = form.get(0);
+				
+				sectionList.forEach( section => {
+					 if(section.sectionId === sectionId) {
+						formElement.name.value = section.name;
+						formElement.color.value = section.color;  
+					 }
+				});
+			}
+			
+			
 			return {
 				init : loadInit
 			}
+		}
+		
+		const deleteSection = (sectionId) => {
+			const result = sectionService().delete(sectionId);
+			document.location.reload();
 		}
 		
 		window.addEventListener("load", app().init);

@@ -24,9 +24,7 @@ public class Subsection {
 	 */
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long subsection_id;
-			
-	private Long section_id;
+	private Long subsectionId;
 	
 	/**
 	 * description
@@ -46,22 +44,22 @@ public class Subsection {
 	/**
 	 * target_day
 	 */
-	private String target_day;
+	private String targetDay;
 	
 	/**
 	 * target_sprint
 	 */
-	private String target_sprint;
+	private String targetSprint;
 	
 	/**
 	 * sort_order
 	 */
-	private int sort_order;
+	private int sortOrder;
 	
 	/**
 	 * Section
 	 */
-//	@ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name="section_id")
-//	private Section section;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="section_id")
+	private Section section;
 }

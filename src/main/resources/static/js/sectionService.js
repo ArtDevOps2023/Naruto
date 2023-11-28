@@ -2,24 +2,59 @@
 
 const sectionService = () => {
 	
-	const upsertSection = async (form) => {
+	
+	const fetchSectionBySectionId = (sectionId) => {
+		
+		const requestData = JSON.stringify({ "query": `{
+												sectionBySectionId( sectionId : ${sectionId}) {
+										    		sectionId
+										   			name
+										    		color
+										    		subsectionList {
+														subsectionId
+											   			description
+											    		facilitator
+											    		details
+											    		targetDay
+											    		targetSprint
+													}
+									  			}
+											}`});
+	 
+		return $.post( { url : '/graphql', data: requestData, contentType: 'application/json' });
+	}
+	
+	const fetchAllSections = () => {
+		
+		const requestData = JSON.stringify({ "query": `{
+												section {
+										    		sectionId
+										   			name
+										    		color
+										    		colorDescription
+									  			}
+											}`});
+	 
+		return $.post( { url : '/graphql', data: requestData, contentType: 'application/json' });
+	}
+	
+	const upsertSection = async (form,sectionId) => {
 		
 		const formData = new FormData(form);
 	    
 		const sectionForm = {
-			section_id : Math.floor(Math.random() * 100) + 1,
 			name: formData.get("name"),
 			color: formData.get("color")
 		}
 		
 		const requestData = JSON.stringify({ query : ` mutation {
 												  upsertSection( form : {
-													  section_id: "${sectionForm.section_id}",
+													  sectionId: "${sectionId}",
 													  name: "${sectionForm.name}",
 													  color: "${sectionForm.color}"
 												  }) 
 												  {
-												    section_id
+												    sectionId
 												    name
 												    color
 											  	  }
@@ -29,10 +64,10 @@ const sectionService = () => {
 		
 	}
 	
-	const deleteSection = async (section_id) => {
+	const deleteSection = async (sectionId) => {
 		return await $.post( 
 				{ 	url : '/graphql', 
-					data : JSON.stringify({ query: `mutation { deleteSection(section_id : ${section_id}) }`}),
+					data : JSON.stringify({ query: `mutation { deleteSection(sectionId : ${sectionId}) }`}),
 					contentType: 'application/json'
 				});
 		
@@ -40,6 +75,8 @@ const sectionService = () => {
 	}
 	
 	return {
+		fetchSectionBySectionId: fetchSectionBySectionId,
+		fetchAllSections : fetchAllSections,
 		upsert : upsertSection,
 		delete: deleteSection
 	}

@@ -103,19 +103,45 @@ public class IndexController {
 	@SuppressWarnings("unused")
 	@GetMapping("/onboarding/section")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String form(@ModelAttribute("sectionForm") SectionForm sectionForm) {
+	public String sectionForm(@ModelAttribute("sectionForm") SectionForm sectionForm) {
+		return "section_form";
+	}
+	
+	/**
+	 * Edit Section
+	 * @param sectionId
+	 * @param form
+	 * @return
+	 */
+	@GetMapping("/onboarding/section/{sectionId}")
+	public String sectionForm(@PathVariable Long sectionId, @ModelAttribute("sectionForm") SectionForm sectionForm) {
+		sectionForm.setSectionId(sectionId);	
 		return "section_form";
 	}
 	
 	/**
 	 * Add Subsection form
-	 * @param section_id
+	 * @param sectionId
 	 * @param form
 	 * @return
 	 */
-	@GetMapping("/onboarding/section/{section_id}/subsection")
-	public String form(@PathVariable Long section_id, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
-		//subsectionForm.setId(section_id);		
+	@GetMapping("/onboarding/section/{sectionId}/subsection")
+	public String subsectionForm(@PathVariable Long sectionId, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
+		subsectionForm.setSectionId(sectionId);		
+		return "subsection_form";
+	}
+	
+	/**
+	 * Add Subsection form
+	 * @param sectionId
+	 * @param subsectionId
+	 * @param form
+	 * @return
+	 */
+	@GetMapping("/onboarding/section/{sectionId}/subsection/{subsectionId}")
+	public String subsectionForm(@PathVariable Long sectionId, @PathVariable Long subsectionId, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
+		subsectionForm.setSectionId(sectionId);	
+		subsectionForm.setSubsectionId(subsectionId);
 		return "subsection_form";
 	}
 }

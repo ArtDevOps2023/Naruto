@@ -1,10 +1,7 @@
 package com.lmph.be.form;
 
-import java.io.Serializable;
-import com.lmph.be.enums.MaritalStatus;
-import com.lmph.be.enums.SectionColor;
-
-import jakarta.validation.constraints.NotBlank;
+import java.io.Serializable; 
+ 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -18,9 +15,7 @@ public class SubsectionForm implements Serializable {
  
 	private static final long serialVersionUID = 1L;
 
-	private Long subsection_id;
-	
-	private Long section_id;
+	private Long subsectionId;
 	
 	@NotEmpty( message = "Subsection Name is required." )
 	@Size( max = 100, message = "Subsection Name must be less than or equal to 100 characters.")
@@ -30,8 +25,10 @@ public class SubsectionForm implements Serializable {
 	
 	private String details;
 	
-	private String target_day;
+	private String targetDay;
 	
-	private String target_sprint;
+	private String targetSprint;
+	
+	private Long sectionId;
 	
 }

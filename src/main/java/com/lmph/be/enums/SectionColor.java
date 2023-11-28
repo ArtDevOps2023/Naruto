@@ -16,14 +16,23 @@ public enum SectionColor {
 	G("Green"),
 	Y("Yellow");
 	
-	private String color;
+	private String label;
 	
-	SectionColor(String color) {
-		this.color = color;
+	SectionColor(String label) {
+		this.label = label;
 	}
 	
-	public String getColor() {
-		return this.color;
+	public String getLabel() {
+		return this.label;
+	}
+	
+	public static String getLabelOfColor(String color) {
+		for (SectionColor sc : values()) {
+			if (sc.name().equals(color)) {
+				return sc.label;
+			}
+		}
+		return null;
 	}
 	
 	

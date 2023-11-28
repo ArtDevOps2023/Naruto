@@ -1,5 +1,10 @@
 package com.lmph.be.dto;
  
+ 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.lmph.be.entity.Subsection;
 
 import lombok.Data;
 
@@ -13,7 +18,7 @@ public class SectionInfo  {
 	/**
 	 * Primary key
 	 */
-	private Long section_id;
+	private Long sectionId;
 		
 	/**
 	 * Name
@@ -24,5 +29,15 @@ public class SectionInfo  {
 	 * Color
 	 */
 	private String color;
+	
+	/**
+	 * Color description
+	 */
+	private String colorDescription;
+
+	/**
+	 * Subsections per Section
+	 */
+	private List<Subsection> subsectionList = new ArrayList<>();
 	 
 }

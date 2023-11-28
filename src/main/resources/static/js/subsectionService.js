@@ -2,39 +2,39 @@
 
 const subsectionService = () => {
 	
-	const upsertSubsection = async (form) => {
+	const upsertSubsection = async (form, subsectionId) => {
 		
 		const formData = new FormData(form);
 	    
 		const subsectionForm = {
-			subsection_id : Math.floor(Math.random() * 100) + 1,
-			section_id: 1,
+			subsectionId : subsectionId,
+			sectionId: formData.get("sectionId"),
 			description: formData.get("description"),
 			facilitator: formData.get("facilitator"),
 			details: formData.get("details"),
-			target_day: formData.get("target_day"),
-			target_sprint: formData.get("target_sprint")
+			targetDay: formData.get("targetDay"),
+			targetSprint: formData.get("targetSprint")
 			
 		}
 		
 		const requestData = JSON.stringify({ query : ` mutation {
 												  upsertSubsection( form : {
-													  subsection_id: "${subsectionForm.subsection_id}",
-													  section_id: "${subsectionForm.section_id}",
+													  subsectionId: "${subsectionForm.subsectionId}",
+													  sectionId: "${subsectionForm.sectionId}",
 													  description: "${subsectionForm.description}",
 													  facilitator: "${subsectionForm.facilitator}",
 													  details: "${subsectionForm.details}",
-													  target_day: "${subsectionForm.target_day}",
-													  target_sprint: "${subsectionForm.target_sprint}",
+													  targetDay: "${subsectionForm.targetDay}",
+													  targetSprint: "${subsectionForm.targetSprint}",
 												  }) 
 												  {
-												    subsection_id
-												    section_id
+												    subsectionId
+												    sectionId
 												    description
 												    facilitator
 												    details
-												    target_day
-												    target_sprint
+												    targetDay
+												    targetSprint
 											  	  }
 											}`});
 		
@@ -42,14 +42,12 @@ const subsectionService = () => {
 		
 	}
 	
-	const deleteSubsection = async (subsection_id) => {
+	const deleteSubsection = async (subsectionId) => {
 		return await $.post( 
 				{ 	url : '/graphql', 
-					data : JSON.stringify({ query: `mutation { deleteSubsection(subsection_id : ${subsection_id}) }`}),
+					data : JSON.stringify({ query: `mutation { deleteSubsection(subsectionId : ${subsectionId}) }`}),
 					contentType: 'application/json'
 				});
-		
-		
 	}
 	
 	return {

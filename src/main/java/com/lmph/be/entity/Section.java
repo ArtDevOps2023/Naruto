@@ -1,14 +1,16 @@
 package com.lmph.be.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -26,8 +28,8 @@ public class Section {
 	 */
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long section_id;
-			
+	private Long sectionId;
+
 	/**
 	 * name
 	 */
@@ -45,11 +47,17 @@ public class Section {
 	/**
 	 * created_by
 	 */
-	private String created_by;
+	private String createdBy;
 	
 	/**
 	 * created_date
 	 */
-	private LocalDateTime created_date;
+	private LocalDateTime createdDate;
+	
+	/**
+	 * Subsections per Section
+	 */
+	@OneToMany(mappedBy="section", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Subsection> subsectionList = new ArrayList<>();
 	 
 }

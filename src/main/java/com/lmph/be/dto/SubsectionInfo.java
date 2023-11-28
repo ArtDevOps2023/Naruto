@@ -1,6 +1,8 @@
 package com.lmph.be.dto;
  
 
+import com.lmph.be.entity.Section;
+
 import lombok.Data;
 
 /**
@@ -13,12 +15,7 @@ public class SubsectionInfo  {
 	/**
 	 * Primary key
 	 */
-	private Long subsection_id;
-	
-	/**
-	 * Foreign key
-	 */
-	private Long section_id;
+	private Long subsectionId;
 	
 	/**
 	 * description
@@ -38,11 +35,20 @@ public class SubsectionInfo  {
 	/**
 	 * target_day
 	 */
-	private String target_day;
+	private String targetDay;
 	
 	/**
 	 * target_sprint
 	 */
-	private String target_sprint;
-	 
+	private String targetSprint;
+	
+	/**
+	 * sort_order
+	 */
+	private int sortOrder;
+	
+	/**
+	 * section_id foreign key
+	 */
+	private Section section;
 }

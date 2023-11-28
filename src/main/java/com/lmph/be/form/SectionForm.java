@@ -17,8 +17,8 @@ public class SectionForm implements Serializable {
  
 	private static final long serialVersionUID = 1L;
 
-	private Long section_id;
-		
+	private Long sectionId;
+
 	@NotEmpty( message = "Section Name is required." )
 	@Size( max = 100, message = "Section Name must be less than or equal to 100 characters")
 	private String name;
