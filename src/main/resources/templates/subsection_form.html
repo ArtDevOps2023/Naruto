@@ -277,27 +277,30 @@
 			
 			const populate = (section) => {
 				const table = $("#dataTable");
-				table.find("tbody").empty();
 				$('#sectionName').text(section.name);
 				
-				section.subsectionList.forEach( subsection => {
-					table.find("tbody").append(
-						`
-						<tr>
-					      	<td>${subsection.subsectionId}</td>
-					      	<td>${subsection.description}</td>
-					      	<td>${subsection.facilitator}</td>
-					      	<td>${subsection.details}</td>
-					      	<td>${subsection.targetDay}</td>
-					     	<td>${subsection.targetSprint}</td>
-					     	<td>
-								<a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}/subsection/${subsection.subsectionId}" class="btn btn-primary px-4">Edit</a>
-								<button onclick="deleteSubsection('${subsection.subsectionId}')" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary px-4">Delete</button>
-							</td>
-					    </tr>
-						`
-					);
-				});
+				if (section.subsectionList && section.subsectionList.length > 0) {
+					table.find("tbody").empty();
+					section.subsectionList.forEach( subsection => {
+						table.find("tbody").append(
+							`
+							<tr>
+						      	<td>${subsection.subsectionId}</td>
+						      	<td>${subsection.description}</td>
+						      	<td>${subsection.facilitator}</td>
+						      	<td>${subsection.details}</td>
+						      	<td>${subsection.targetDay}</td>
+						     	<td>${subsection.targetSprint}</td>
+						     	<td>
+									<a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}/subsection/${subsection.subsectionId}" class="btn btn-primary px-4">Edit</a>
+									<button onclick="deleteSubsection('${subsection.subsectionId}')" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary px-4">Delete</button>
+								</td>
+						    </tr>
+							`
+						);
+					});
+				}
+				
 			}
 			
 			const populateSubsectionForm = (section, subsectionId) => {
@@ -322,8 +325,10 @@
 		}
 		
 		const deleteSubsection = (subsectionId) => {
-			const result = subsectionService().delete(subsectionId);
-			document.location.reload();
+			if (confirm("Confirm to delete?")) {
+				const result = subsectionService().delete(subsectionId);
+				document.location.reload();
+			}
 		}
 		
 		window.addEventListener("load", app().init);

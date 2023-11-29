@@ -176,100 +176,11 @@
 			const ROLE_ADMIN = "admin";
 			const ROLE_USER = "user";
 			const roles = [[${#authentication.principal.authorities}]];
-				
-			const loadInit = () => {
-				fetch();
-				$("#dataTable").on('click', '.btnActionDelete', deleteEmployee);
-			}
-			
-			const deleteEmployee = async (e) => {
-				e.preventDefault();
-				const id = e.target.dataset.id;
-				
-				const result = await appService().delete(id);
-				document.location.reload();								
-			}
-			
-			const fetch = () => {
-				const table = $("#dataTable");
-			
-					$.post({
-					  	url: '/graphql',
-					  	data: JSON.stringify({ "query": `{
-												  employees {
-											    id
-											    firstName
-											    middleName
-											    lastName    
-											    age
-											    yearsOfExperience
-											    contacts { 
-											    	id
-											      contactNo
-											      isPrimary
-											    }
-											    addresses { 
-											    	id
-											      address1
-											      address2
-											      isPrimary
-											    }
-											  }
-											}` }),
-				
-				  		contentType: 'application/json'
-				
-					}).done(function(res) {
-					  	 res.data && res.data.employees.length > 0 ? populate(res.data.employees) : populateEmpty();
-					});	
-			}
-			const populateRow = (employee) => {
-				
-				const primaryAddress = employee.addresses.find(address => address.isPrimary);
-				const primaryContact = employee.contacts.find(contact => contact.isPrimary);
-				const address = primaryAddress ? `${primaryAddress.address1}, ${primaryAddress.address2}` : '';
-				const contact = primaryContact ? primaryContact.contactNo : ''
-				const action = hasRole(ROLE_ADMIN) ? 
-								`
-									<a class="btn btn-sm btn-primary" href="/employees/${employee.id}">Edit</a>
-									<a class="btn btn-sm btn-danger btnActionDelete" data-id="${employee.id}" href="#">Delete</a>
-								`
-								:		
-								`
-									<a class="btn btn-sm btn-primary" href="/employees/${employee.id}">View</a>
-								`
-				
-				return `
-						<tr>
-		                    <td>${employee.firstName} ${employee.middleName} ${employee.lastName}</td>
-		                    <td>${address}</td>
-		                    <td>${contact}</td>
-		                    <td>${employee.age}</td>
-		                    <td>${employee.yearsOfExperience}</td>
-		                    <td class="text-center">
-								${action}
-							</td>
-		                </tr>
-					`;
-			};
-			
-			const populate = (employees) => {
-				
-				const table = $("#dataTable");
-				table.find("tbody").empty();
-				
-				employees.forEach( employee => {	
-					table.find("tbody").append( populateRow(employee) );
-				});
-			}
-		
-			const populateEmpty = () => {
-				const table = $("#dataTable");
-				table.find("tbody").html(`<tr><td colspan="6" class="text-center">No record found</td></tr>`);	 
-			}
-				
 			const hasRole = (role) => roles.find( r => r == role)
-		
+			
+			const loadInit = () => {
+				
+			}
 			
 			return {
 				init : loadInit

@@ -16,27 +16,27 @@ import lombok.Data;
 public class SectionInfo  {
 	
 	/**
-	 * Primary key
+	 * ID of the Section
 	 */
 	private Long sectionId;
 		
 	/**
-	 * Name
+	 * Name of the Section
 	 */
 	private String name;
 	
 	/**
-	 * Color
+	 * Color for the Section
 	 */
 	private String color;
 	
 	/**
-	 * Color description
+	 * Description of the selected color
 	 */
 	private String colorDescription;
 
 	/**
-	 * Subsections per Section
+	 * List of Subsections per Section
 	 */
 	private List<Subsection> subsectionList = new ArrayList<>();
 	 

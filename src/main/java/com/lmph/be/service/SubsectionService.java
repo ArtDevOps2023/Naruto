@@ -37,12 +37,35 @@ public class SubsectionService {
 					
 		if (optSubsection.isPresent()) {
 			SubsectionInfo subsectionInfo = new SubsectionInfo();
-			Subsection subsection = this.subsectionDao.findById(subsectionId).get();
+			Subsection subsection = optSubsection.get();
 			BeanUtils.copyProperties(subsection, subsectionInfo);
 			return subsectionInfo;	
 		} else {
 			return null;
 		}				
+	}
+	
+	/**
+	 * Fetch all subsections by sectionId (foreign key)
+	 * @param sectionId
+	 * @return List<SubsectionInfo>
+	 */
+	public List<SubsectionInfo> getAllSubsectionsBySectionId(Long sectionId) {		
+			 		
+		Section section = new Section();
+		section.setSectionId(sectionId);
+		Optional<Subsection> optSubsectionList = this.subsectionDao.findBySection(section);
+		
+		if (optSubsectionList.isPresent()) {
+			return optSubsectionList.stream().map( subsection -> {
+				SubsectionInfo subsectionInfo = new SubsectionInfo();
+				BeanUtils.copyProperties(subsection, subsectionInfo);
+				return subsectionInfo;
+			})
+			.collect(Collectors.toList());
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -61,9 +84,9 @@ public class SubsectionService {
 	}
 	
 	/**
-	 * Upsert
+	 * Method to add and update a subsection
 	 * @param form
-	 * @return
+	 * @return SubsectionInfo
 	 */
 	public SubsectionInfo upsert(SubsectionForm form) {
 		
@@ -84,7 +107,7 @@ public class SubsectionService {
 	}
 		
 	/**
-	 * Delete a particular subsection
+	 * Method to delete a particular subsection
 	 * @param subsectionId
 	 */
 	public void deleteSubsection(Long subsectionId)  {

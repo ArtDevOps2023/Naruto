@@ -26,6 +26,11 @@ public enum SectionColor {
 		return this.label;
 	}
 	
+	/**
+	 * Method to get the label of the color for the Section
+	 * @param color
+	 * @return String
+	 */
 	public static String getLabelOfColor(String color) {
 		for (SectionColor sc : values()) {
 			if (sc.name().equals(color)) {

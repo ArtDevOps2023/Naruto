@@ -113,12 +113,6 @@ class IndexControllerTest {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	@Test
 	public void onboarding_unAuthenticatedRedirectToLogin() throws Exception {
 		
@@ -152,11 +146,81 @@ class IndexControllerTest {
 		
 	}
 	
+	@ParameterizedTest
+	@ValueSource(strings = { "1" })
+	public void sectionForm_unAuthenticatedRedirectToLogin(String urlPart ) throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/" + urlPart);
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(302))
+		.andExpect(redirectedUrlPattern("**/login"));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = { "1" })
+	@WithMockUser(username = "user", roles = {"USER"})
+	public void sectionForm_SectionPageHasUserRoleStatusForbidden(String urlPart ) throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/" + urlPart);
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(403));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = { "1" })
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
+	public void sectionForm_SectionPageHasAdminRoleStatusOk(String urlPart ) throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/" + urlPart);
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	
 	@Test
-	@WithMockUser()
-	public void subsectionForm_SubsectionPageAuthenticatedStatusOk() throws Exception {
+	public void subsectionForm_unAuthenticatedRedirectToLogin() throws Exception {
 		
 		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/1/subsection");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(302))
+		.andExpect(redirectedUrlPattern("**/login"));
+	}
+	
+	
+	@Test
+	@WithMockUser(username = "user", roles = {"USER"})
+	public void subsectionForm_SectionPageHasUserRoleStatusForbidden() throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/1/subsection");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(403));
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
+	public void subsectionForm_SectionPageHasAdminRoleStatusOk() throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/1/subsection");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	public void subsectionFormEdit_unAuthenticatedRedirectToLogin() throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/1/subsection/1");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(302))
+		.andExpect(redirectedUrlPattern("**/login"));
+	}
+	
+	
+	@Test
+	@WithMockUser(username = "user", roles = {"USER"})
+	public void subsectionFormEdit_SectionPageHasUserRoleStatusForbidden() throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/1/subsection/1");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(403));
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", roles = {"ADMIN"})
+	public void subsectionFormEdit_SectionPageHasAdminRoleStatusOk() throws Exception {
+		
+		RequestBuilder request = MockMvcRequestBuilders.get("/onboarding/section/1/subsection/1");
 		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 }

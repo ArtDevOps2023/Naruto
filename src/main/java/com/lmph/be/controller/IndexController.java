@@ -97,7 +97,7 @@ public class IndexController {
 	
 	/**
 	 * Display Sections and Add Section form
-	 * @param form
+	 * @param sectionForm
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -108,12 +108,13 @@ public class IndexController {
 	}
 	
 	/**
-	 * Edit Section
+	 * Edit Section form
 	 * @param sectionId
-	 * @param form
+	 * @param sectionForm
 	 * @return
 	 */
 	@GetMapping("/onboarding/section/{sectionId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String sectionForm(@PathVariable Long sectionId, @ModelAttribute("sectionForm") SectionForm sectionForm) {
 		sectionForm.setSectionId(sectionId);	
 		return "section_form";
@@ -122,23 +123,25 @@ public class IndexController {
 	/**
 	 * Add Subsection form
 	 * @param sectionId
-	 * @param form
+	 * @param subsectionForm
 	 * @return
 	 */
 	@GetMapping("/onboarding/section/{sectionId}/subsection")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String subsectionForm(@PathVariable Long sectionId, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
 		subsectionForm.setSectionId(sectionId);		
 		return "subsection_form";
 	}
 	
 	/**
-	 * Add Subsection form
+	 * Edit Subsection form
 	 * @param sectionId
 	 * @param subsectionId
-	 * @param form
+	 * @param subsectionForm
 	 * @return
 	 */
 	@GetMapping("/onboarding/section/{sectionId}/subsection/{subsectionId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String subsectionForm(@PathVariable Long sectionId, @PathVariable Long subsectionId, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
 		subsectionForm.setSectionId(sectionId);	
 		subsectionForm.setSubsectionId(subsectionId);

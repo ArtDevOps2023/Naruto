@@ -37,7 +37,7 @@ public class SectionService {
 					
 		if (optSection.isPresent()) {
 			SectionInfo sectionInfo = new SectionInfo();
-			Section section = this.sectionDao.findById(sectionId).get();
+			Section section = optSection.get();
 			BeanUtils.copyProperties(section, sectionInfo);
 			return sectionInfo;	
 		} else {
@@ -62,9 +62,9 @@ public class SectionService {
 	}
 	
 	/**
-	 * Upsert
+	 * Method for adding and updating a section
 	 * @param form
-	 * @return
+	 * @return SectionInfo
 	 */
 	public SectionInfo upsert(SectionForm form) {
 		
@@ -72,8 +72,6 @@ public class SectionService {
 		Section section = new Section();
 		
 		BeanUtils.copyProperties(form, section);
-		  
-		
 		section = this.sectionDao.saveAndFlush(section);
 		
 		BeanUtils.copyProperties(section, sectionInfo);
@@ -82,7 +80,7 @@ public class SectionService {
 	}
 		
 	/**
-	 * Delete a particular section
+	 * Method to delete a particular section
 	 * @param sectionId
 	 */
 	public void deleteSection(Long sectionId)  {

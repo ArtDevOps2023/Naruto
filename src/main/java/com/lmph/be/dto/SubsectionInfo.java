@@ -13,42 +13,37 @@ import lombok.Data;
 public class SubsectionInfo  {
 	
 	/**
-	 * Primary key
+	 * ID of the Subsection
 	 */
 	private Long subsectionId;
 	
 	/**
-	 * description
+	 * Description of the Subsection
 	 */
 	private String description;
 	
 	/**
-	 * facilitator
+	 * Facilitator of the Subsection
 	 */
 	private String facilitator;
 	
 	/**
-	 * details
+	 * Details and References of the Subsection
 	 */
 	private String details;
 	
 	/**
-	 * target_day
+	 * Target Day to finish the Subsection task
 	 */
 	private String targetDay;
 	
 	/**
-	 * target_sprint
+	 *  Target Sprint to finish the Subsection task
 	 */
 	private String targetSprint;
 	
 	/**
-	 * sort_order
-	 */
-	private int sortOrder;
-	
-	/**
-	 * section_id foreign key
+	 * Parent Section of this Subsection. Mapped by section_id as foreign key.
 	 */
 	private Section section;
 }

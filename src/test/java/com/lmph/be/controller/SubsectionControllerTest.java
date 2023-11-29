@@ -13,37 +13,37 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
  
 
 /**
- * Section Controller Unit Test
+ * Subsection Controller Unit Test
  * @author Ryan Valmoria
  */
 @SpringBootTest
 @AutoConfigureMockMvc
-class SectionControllerTest {
+class SubsectionControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	/**
-	 * Unit test to check if role user has access to add or update a section
+	 * Unit test to check if role user has access to add or update a subsection
 	 * @throws Exception
 	 */
 	@Test
 	@WithMockUser(username = "user", roles = {"USER"})
-	public void upsertSection_hasUserRoleStatusForbidden() throws Exception {
+	public void upsertSubsection_hasUserRoleStatusForbidden() throws Exception {
 						
-		RequestBuilder request = MockMvcRequestBuilders.post("/onboarding/section/post");
+		RequestBuilder request = MockMvcRequestBuilders.post("/onboarding/section/1/subsection/1");
 		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(405));
 	}
 	
 	/**
-	 * Unit test to check if role user has access to delete a section
+	 * Unit test to check if role user has access to delete a subsection
 	 * @throws Exception
 	 */
 	@Test
 	@WithMockUser(username = "user", roles = {"USER"})
-	public void deleteSection_hasUserRoleStatusForbidden() throws Exception {
+	public void deleteSubsection_hasUserRoleStatusForbidden() throws Exception {
 		
-		RequestBuilder request = MockMvcRequestBuilders.delete("/onboarding/section/1");
+		RequestBuilder request = MockMvcRequestBuilders.delete("/onboarding/section/1/subsection/1");
 		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(405));
 	}
 	

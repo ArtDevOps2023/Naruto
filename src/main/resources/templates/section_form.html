@@ -262,25 +262,28 @@
 			
 			const populate = (sectionList) => {
 				const table = $("#dataTable");
-				table.find("tbody").empty();
 				
-				sectionList.forEach( section => {
-					table.find("tbody").append(
-						`
-						<tr>
-					      	<td>${section.sectionId}</td>
-					      	<td>${section.name}</td>
-					      	<td>${section.colorDescription}</td>
-					      	<td>Admin</td>
-					      	<td>
-							  <a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}/subsection" class="btn btn-primary px-4">Add Subsection</a>
-							  <a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}" class="btn btn-primary px-4">Edit</a>
-							  <button onclick="deleteSection('${section.sectionId}')" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary px-4">Delete</button>
-							</td>
-					    </tr>
-						`
-					);
-				});
+				if (sectionList && sectionList.length > 0) {
+					table.find("tbody").empty();
+					
+					sectionList.forEach( section => {
+						table.find("tbody").append(
+							`
+							<tr>
+						      	<td>${section.sectionId}</td>
+						      	<td>${section.name}</td>
+						      	<td>${section.colorDescription}</td>
+						      	<td>Admin</td>
+						      	<td>
+								  <a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}/subsection" class="btn btn-primary px-4">Add Subsection</a>
+								  <a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section/${section.sectionId}" class="btn btn-primary px-4">Edit</a>
+								  <button onclick="deleteSection('${section.sectionId}')" sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-primary px-4">Delete</button>
+								</td>
+						    </tr>
+							`
+						);
+					});
+				}
 			}
 			
 			const populateSectionForm = (sectionList, sectionId) => {
@@ -302,8 +305,10 @@
 		}
 		
 		const deleteSection = (sectionId) => {
-			const result = sectionService().delete(sectionId);
-			document.location.reload();
+			if (confirm("Confirm to delete?")) {
+			    const result = sectionService().delete(sectionId);
+				document.location.reload();
+			}
 		}
 		
 		window.addEventListener("load", app().init);
