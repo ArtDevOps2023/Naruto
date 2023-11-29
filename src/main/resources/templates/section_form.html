@@ -127,7 +127,7 @@
 													</div>
 													<div class="col-9">
 													  	<input type="text" class="form-control" id="name" name="name" th:value="${sectionForm.name}" placeholder="Section Name" required/>
-													  	<div class="mt-2 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Section Name Error</div>
+													  	<div class="mt-2 text-danger d-none" id="nameError">Section Name is Required</div>
 													</div>
 												</div>
 												<div class="row mb-3">
@@ -142,7 +142,7 @@
 																  th:selected="${sectionForm.color==enum.toString()}">
 															</option>
 													  	</select>
-													  	<div class="mt-2 text-danger" th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Error</div>
+													  	<div class="mt-2 text-danger d-none" id="colorError">Section Color is Required.</div>
 													</div>
 												</div>
 											</form>
@@ -247,17 +247,47 @@
 				
 				$('#btnActionAdd').click( async () => {
 					const sectionForm = document.querySelector('#sectionForm');
-					const result = await sectionService().upsert(sectionForm,0);
-					document.location.href="/onboarding/section";
+					const isPassValidation = validateSectionForm(sectionForm);
+					if (isPassValidation) {
+						const result = await sectionService().upsert(sectionForm,0);
+						if (result && result.data.upsertSection) {
+							document.location.href="/onboarding/section";
+						} else {
+							console.log("Error in Adding");
+						}
+					}
 				});
 				
 				$('#btnActionUpdate').click( async () => {
 					const sectionForm = document.querySelector('#sectionForm');
-					const result = await sectionService().upsert(sectionForm,SECTION_ID);
-					document.location.href="/onboarding/section";
+					const isPassValidation = validateSectionForm(sectionForm);
+					if (isPassValidation) {
+						const result = await sectionService().upsert(sectionForm,SECTION_ID);
+						document.location.href="/onboarding/section";
+					}
 				});
 				
 				
+			}
+			
+			const validateSectionForm = (sectionForm) => {
+				const formData = new FormData(sectionForm);
+				let validatePass = true;
+				if (formData.get("name") === '' || formData.get("name") === null) {
+					$('#nameError').removeClass("d-none");
+					validatePass = false;
+				} else {
+					$('#nameError').addClass("d-none");
+				}
+				
+				if (formData.get("color") === '' || formData.get("color") === null) {
+					$('#colorError').removeClass("d-none");
+					validatePass = false;
+				} else {
+					$('#colorError').addClass("d-none");
+				}
+				
+				return validatePass;
 			}
 			
 			const populate = (sectionList) => {

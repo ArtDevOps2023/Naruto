@@ -129,7 +129,7 @@
 												<div class="form-group col ml-3">
 											  		<label for="description" class="form-label">Description</label>
 												  	<textarea class="form-control" id="description" name="description" th:value="${subsectionForm.description}" placeholder="Description" rows="3"></textarea>
-													<div class="mt-2 text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</div>
+													<div class="mt-2 text-danger d-none" id="descriptionError">Description is Required</div>
 												</div>
 					                     	</div>
 				                            <div class="row mb-3">
@@ -264,15 +264,35 @@
 				
 				$('#btnActionSubmit').click( async () => {
 					const subsectionForm = document.querySelector('#subsectionForm');
-					const result = await subsectionService().upsert(subsectionForm, 0);
-					document.location.reload();
+					const isPassValidation = validateSubsectionForm(subsectionForm);
+					if (isPassValidation) {
+						const result = await subsectionService().upsert(subsectionForm, 0);
+						document.location.reload();
+					}
 				});
 				
 				$('#btnActionUpdate').click( async () => {
 					const subsectionForm = document.querySelector('#subsectionForm');
-					const result = await subsectionService().upsert(subsectionForm, SUBSECTION_ID);
-					document.location.href="/onboarding/section/" + SECTION_ID + "/subsection";
+					const isPassValidation = validateSubsectionForm(subsectionForm);
+					if (isPassValidation) {
+						const result = await subsectionService().upsert(subsectionForm, SUBSECTION_ID);
+						document.location.href="/onboarding/section/" + SECTION_ID + "/subsection";
+					}
 				});
+			}
+			
+			
+			const validateSubsectionForm = (subsectionForm) => {
+				const formData = new FormData(subsectionForm);
+				let validatePass = true;
+				if (formData.get("description") === '' || formData.get("description") === null) {
+					$('#descriptionError').removeClass("d-none");
+					validatePass = false;
+				} else {
+					$('#descriptionError').addClass("d-none");
+				}
+				
+				return validatePass;
 			}
 			
 			const populate = (section) => {

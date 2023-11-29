@@ -128,6 +128,26 @@
 						</div>
 						<div class="card-header py-3">
                             <a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section" class="btn btn-primary px-4">  Add Section +  </a>
+                            <hr/>
+                            <div>
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<thead style="background-color: #d3d3d3">
+									    <tr>
+									      <th scope="col">ID#</th>
+									      <th scope="col">Section Name</th>
+									      <th scope="col">Color</th>
+									      <th scope="col">Created By</th>
+									    </tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td colspan="4" class="text-center">
+												No records found.
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
                         </div>
 					</div>
 
@@ -166,7 +186,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
-     <script src="/js/appService.js"></script>
+     <script src="/js/sectionService.js"></script>
 
 
 	<script>
@@ -179,7 +199,34 @@
 			const hasRole = (role) => roles.find( r => r == role)
 			
 			const loadInit = () => {
+				const fetchAllSections = sectionService().fetchAllSections();
 				
+				fetchAllSections.done(function(result) {
+					if (result.data) {
+						populate(result.data.section);
+					}
+				});	
+			}
+			
+			const populate = (sectionList) => {
+				const table = $("#dataTable");
+				
+				if (sectionList && sectionList.length > 0) {
+					table.find("tbody").empty();
+					
+					sectionList.forEach( section => {
+						table.find("tbody").append(
+							`
+							<tr>
+						      	<td>${section.sectionId}</td>
+						      	<td>${section.name}</td>
+						      	<td>${section.colorDescription}</td>
+						      	<td>Admin</td>
+						    </tr>
+							`
+						);
+					});
+				}
 			}
 			
 			return {
