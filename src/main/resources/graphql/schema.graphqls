@@ -1,11 +1,18 @@
 type Query {
 	employees: [Employee]
     employeeById(id: ID): Employee
+    section: [Section]
+    sectionBySectionId(sectionId: ID): Section
+    subsection: [Subsection]
 }
 
 type Mutation {
 	upsertEmployee(form: EmployeeForm): Employee
 	deleteEmployee(id: ID!): Boolean
+	upsertSection(form: SectionForm): Section
+	deleteSection(sectionId: ID!): Boolean
+	upsertSubsection(form: SubsectionForm): Subsection
+	deleteSubsection(subsectionId: ID!): Boolean
 }
 
 type Employee {
@@ -37,6 +44,24 @@ type Address {
 	isPrimary: Boolean
 }
 
+type Section {
+	sectionId: ID
+	name: String
+	color: String
+	colorDescription: String
+	subsectionList: [Subsection]
+}
+
+type Subsection {
+	subsectionId: ID
+	sectionId: ID
+	description: String
+	facilitator: String
+	details: String
+	targetDay: String
+	targetSprint: String
+}
+
 
 input EmployeeForm {
     id: ID
@@ -63,4 +88,22 @@ input AddressInput {
 	address1: String
 	address2: String
 	isPrimary: Boolean
+}
+
+input SectionForm {
+	sectionId: ID
+	name: String!
+	color: String!
+	colorDescription: String
+	subsectionList: [SubsectionForm]
+}
+
+input SubsectionForm {
+	subsectionId: ID
+	sectionId: ID
+	description: String!
+	facilitator: String
+	details: String
+	targetDay: String
+	targetSprint: String
 }
