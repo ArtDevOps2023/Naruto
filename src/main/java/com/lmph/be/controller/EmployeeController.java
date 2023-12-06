@@ -2,6 +2,8 @@ package com.lmph.be.controller;
 
 import java.util.List;
 
+import com.lmph.be.entity.EmployeeFlow;
+import com.lmph.be.service.EmployeeFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -26,6 +28,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+
+	@Autowired
+	private EmployeeFlowService employeeFlowService;
 	
 	/**
 	 * GraphQL controller for fetching single employee
@@ -59,5 +64,11 @@ public class EmployeeController {
 		this.employeeService.delete(id);
 		
 		return true;
+	}
+
+	//TODO JJJ: create javadoc
+	@QueryMapping
+	public List<EmployeeFlow> employeeFlowsById(@Argument Long id){
+		return this.employeeFlowService.getEmployeeFlowsByEmployeeId(id);
 	}
 }

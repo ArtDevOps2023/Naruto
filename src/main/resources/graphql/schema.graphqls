@@ -4,6 +4,12 @@ type Query {
     section: [Section]
     sectionBySectionId(sectionId: ID): Section
     subsection: [Subsection]
+	#region TODO JJJ: remove before commit; test queries only
+	employeeFlowsById(id :ID): [EmployeeFlow]
+	allFlows: [Flow]
+	allFlowsSections: [FlowSection]
+	#endregion
+
 }
 
 type Mutation {
@@ -54,7 +60,7 @@ type Section {
 
 type Subsection {
 	subsectionId: ID
-	sectionId: ID
+	section: Section
 	description: String
 	facilitator: String
 	details: String
@@ -62,6 +68,31 @@ type Subsection {
 	targetSprint: String
 }
 
+type Flow {
+	flowId: ID
+	name: ID
+	createdBy: String
+	createdDate: String
+}
+
+type FlowSection {
+	id: ID
+	section: Section
+	flow: Flow
+	passFailFlag: Boolean
+	sortOrder: Int
+}
+
+type EmployeeFlow {
+	id: ID
+	employee: Employee
+	flow:  Flow
+	section: Section
+	subSection: Subsection
+	status: String
+	startDate: String
+	completedDate: String
+}
 
 input EmployeeForm {
     id: ID
