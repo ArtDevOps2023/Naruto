@@ -10,4 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 06-Dec-2023
  */
 public interface FlowSectionDao extends JpaRepository<FlowSection, Long> {
+
+    void deleteByflowId(Long id);
 }

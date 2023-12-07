@@ -1,5 +1,6 @@
 package com.lmph.be.controller;
 
+import com.lmph.be.utility.SecurityUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,14 +21,6 @@ import com.lmph.be.form.SubsectionForm;
 @Controller
 public class IndexController {
 
-	private boolean isAuthenticated() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    if (authentication == null || AnonymousAuthenticationToken.class.
-	      isAssignableFrom(authentication.getClass())) {
-	        return false;
-	    }
-	    return authentication.isAuthenticated();
-	}
 	
 	/**
 	 * Login page
@@ -37,7 +30,7 @@ public class IndexController {
 	@GetMapping("/login")
 	public String login() throws Exception {
 				
-		if(this.isAuthenticated()) {
+		if(SecurityUtil.isAuthenticated()) {
 			return "redirect:/home";
 		}
 		

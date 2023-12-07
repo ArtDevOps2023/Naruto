@@ -28,6 +28,9 @@ public class FlowSection {
     @OneToOne(targetEntity = Flow.class, fetch = FetchType.LAZY)
     private Flow flow;
 
+    @Column(name = "flow_id", insertable = false, updatable = false)
+    private Long flowId;
+
     private Boolean passFailFlag;
 
     private Integer sortOrder;

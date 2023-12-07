@@ -19,6 +19,12 @@ type Mutation {
 	deleteSection(sectionId: ID!): Boolean
 	upsertSubsection(form: SubsectionForm): Subsection
 	deleteSubsection(subsectionId: ID!): Boolean
+	#region TODO JJJ: implement these methods
+	upsertFlow(form: FlowForm): Flow
+	deleteFlow(flowId: ID): Boolean
+	#upsertFlowSection(form: FlowAndSectionForm): Boolean
+	#deleteFlowSection
+	#endregion
 }
 
 type Employee {
@@ -137,4 +143,19 @@ input SubsectionForm {
 	details: String
 	targetDay: String
 	targetSprint: String
+}
+
+input FlowForm {
+	flowId: ID
+	name: String
+	createdBy: String
+	createdDate: String
+}
+
+input FlowSectionForm {
+	flowSectionId: ID
+	flowId: ID
+	sectionId: ID
+	passFailFlag: Boolean
+	sortOrder: Int
 }

@@ -18,7 +18,7 @@ public class Flow {
 
     @Id
     @PrimaryKeyJoinColumn
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long flowId;
 
     private String name;
