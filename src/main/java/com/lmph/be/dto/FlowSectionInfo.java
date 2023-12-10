@@ -1,16 +1,19 @@
 package com.lmph.be.dto;
 
+import com.lmph.be.entity.Section;
+import com.lmph.be.entity.Flow;
+import lombok.Data;
+
+@Data
 public class FlowSectionInfo {
 
     private Long id;
 
-    private Long flowId;
+    private Flow flow;
 
-    private String flowName;
+    private Section section;
 
-    private Long sectionId;
-
-    private Long sectionName;
+    private Integer passFailFlag;
 
     private Integer sortOrder;
 

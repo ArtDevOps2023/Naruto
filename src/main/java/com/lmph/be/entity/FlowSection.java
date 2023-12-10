@@ -31,7 +31,5 @@ public class FlowSection {
     @Column(name = "flow_id", insertable = false, updatable = false)
     private Long flowId;
 
-    private Boolean passFailFlag;
-
     private Integer sortOrder;
 }

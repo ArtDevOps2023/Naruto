@@ -22,9 +22,6 @@ public class FlowSectionForm implements Serializable {
     @NotNull(message = "Section must be present.")
     private Long sectionId;
 
-    @NotNull
-    private Boolean passFailFlag;
-
     @Positive
     private Integer sortOrder;
 }

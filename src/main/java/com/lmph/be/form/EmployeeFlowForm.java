@@ -1,7 +1,10 @@
 package com.lmph.be.form;
 
+import com.lmph.be.enums.PassFailFlag;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.io.Serial;
@@ -16,20 +19,27 @@ public class EmployeeFlowForm implements Serializable {
 
     private Long id;
 
-    @NotEmpty(message = "Flow name must be selected.")
+    @NotNull(message = "Flow name must be selected.")
+    @Positive
     private Long flowId;
 
-    @NotEmpty(message = "Section name must be selected.")
+    @NotNull(message = "Section name must be selected.")
+    @Positive
     private Long sectionId;
 
-    @NotEmpty(message = "Employee must be selected.")
+    @NotNull(message = "Employee must be selected.")
+    @Positive
     private Long employeeId;
 
-    @NotEmpty(message = "Subsection must be selected.")
+    @NotNull(message = "Subsection must be selected.")
+    @Positive
     private Long subsectionId;
 
     @NotEmpty
     private String status;
+
+    @NotNull
+    private PassFailFlag passFailFlag = PassFailFlag.Unset;
 
     @PastOrPresent
     private LocalDate startDate;

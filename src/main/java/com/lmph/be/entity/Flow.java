@@ -26,4 +26,18 @@ public class Flow {
     private String createdBy;
 
     private LocalDate createdDate;
+
+    public Flow() {
+    }
+
+    public Flow(Long flowId){
+        this.flowId = flowId;
+    }
+
+    public Flow(Long flowId, String name, String createdBy, LocalDate createdDate) {
+        this.flowId = flowId;
+        this.name = name;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+    }
 }

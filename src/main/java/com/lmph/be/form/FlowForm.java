@@ -21,9 +21,7 @@ public class FlowForm implements Serializable {
     @Size(max = 100, message = "Flow name must be less than or equal to 100 characters.")
     private String name;
 
-    @NotEmpty
     private String createdBy;
 
-    @PastOrPresent
     private LocalDate createdDate;
 }

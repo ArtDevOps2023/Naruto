@@ -13,6 +13,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SecurityUtil {
 
 
+    /**
+     * @author Ryan Valmoria
+     * @return
+     */
     public static boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || AnonymousAuthenticationToken.class.
@@ -20,6 +24,18 @@ public class SecurityUtil {
             return false;
         }
         return authentication.isAuthenticated();
+    }
+
+    /**
+     * Get the name of the logged in/authenticated user
+     *
+     * @author Jeffrey John Javison
+     * @since 11-Dec-2023
+     * @return the name of the logged in user
+     */
+    public static String getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 
 }

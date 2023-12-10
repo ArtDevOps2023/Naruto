@@ -2,7 +2,9 @@ package com.lmph.be.controller;
 
 import java.util.List;
 
+import com.lmph.be.dto.EmployeeFlowInfo;
 import com.lmph.be.entity.EmployeeFlow;
+import com.lmph.be.form.EmployeeFlowForm;
 import com.lmph.be.service.EmployeeFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -70,5 +72,35 @@ public class EmployeeController {
 	@QueryMapping
 	public List<EmployeeFlow> employeeFlowsById(@Argument Long id){
 		return this.employeeFlowService.getEmployeeFlowsByEmployeeId(id);
+	}
+
+	@MutationMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public EmployeeFlowInfo upsertEmployeeFlow(@Valid @Argument EmployeeFlowForm form){
+		try{
+			if(form != null)
+				return this.employeeFlowService.upsertEmployeeFlow(form);
+			else
+				throw new Exception("Employee Flow is null.");
+		}
+		catch(Exception ex){
+			return null;
+		}
+	}
+
+
+	@MutationMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public Boolean deleteEmployeeFlow(@Valid @Argument Long employeeFlowId){
+		try {
+			if(employeeFlowId != null)
+				this.employeeFlowService.deleteEmployeeFlow(employeeFlowId);
+			else
+				throw new Exception("Employee Flow ID is null.");
+
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 }

@@ -15,4 +15,6 @@ public interface EmployeeFlowDao extends JpaRepository<EmployeeFlow, Long> {
 
     List<EmployeeFlow> findByemployeeId(Long employeeId);
 
+    void deleteByemployeeId(Long employeeId);
+
 }

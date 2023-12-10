@@ -92,5 +92,11 @@ public class Employee {
 	 * Date updated
 	 */
 	private LocalDateTime updatedAt;
-	
+
+	public Employee() {
+	}
+
+	public Employee(Long id) {
+		this.id = id;
+	}
 }

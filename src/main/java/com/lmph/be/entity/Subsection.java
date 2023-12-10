@@ -63,4 +63,11 @@ public class Subsection {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="section_id")
 	private Section section;
+
+	public Subsection() {
+	}
+
+	public Subsection(Long subsectionId) {
+		this.subsectionId = subsectionId;
+	}
 }

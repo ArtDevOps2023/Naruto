@@ -4,6 +4,7 @@ import com.lmph.be.entity.Employee;
 import com.lmph.be.entity.Flow;
 import com.lmph.be.entity.Section;
 import com.lmph.be.entity.Subsection;
+import com.lmph.be.enums.PassFailFlag;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -14,18 +15,16 @@ public class EmployeeFlowInfo {
     private Long id;
 
     private Employee employee;
-    private Long employeeId;
 
     private Flow flow;
-    private Long flowId;
 
     private Section section;
-    private Long sectionId;
 
-    private Subsection subsection;
-    private Long subsectionId;
+    private Subsection subSection;
 
     private String status;
+
+    private PassFailFlag passFailFlag;
 
     private LocalDate startDate;
 

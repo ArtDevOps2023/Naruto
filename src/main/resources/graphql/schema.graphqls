@@ -4,12 +4,10 @@ type Query {
     section: [Section]
     sectionBySectionId(sectionId: ID): Section
     subsection: [Subsection]
-	#region TODO JJJ: remove before commit; test queries only
+	#JJJ: Flow, FlowSections, EmployeeFlow queries
 	employeeFlowsById(id :ID): [EmployeeFlow]
 	allFlows: [Flow]
 	allFlowsSections: [FlowSection]
-	#endregion
-
 }
 
 type Mutation {
@@ -19,12 +17,13 @@ type Mutation {
 	deleteSection(sectionId: ID!): Boolean
 	upsertSubsection(form: SubsectionForm): Subsection
 	deleteSubsection(subsectionId: ID!): Boolean
-	#region TODO JJJ: implement these methods
+	#JJJ: Flow, FlowSections, EmployeeFlow mutations
 	upsertFlow(form: FlowForm): Flow
 	deleteFlow(flowId: ID): Boolean
-	#upsertFlowSection(form: FlowAndSectionForm): Boolean
-	#deleteFlowSection
-	#endregion
+	upsertFlowSection(form: FlowSectionForm): FlowSection
+	deleteFlowSection(flowSectionId: ID): Boolean
+	upsertEmployeeFlow(form: EmployeeFlowForm): EmployeeFlow
+	deleteEmployeeFlow(employeeFlowId: ID): Boolean
 }
 
 type Employee {
@@ -66,7 +65,7 @@ type Section {
 
 type Subsection {
 	subsectionId: ID
-	section: Section
+	sectionId: ID
 	description: String
 	facilitator: String
 	details: String
@@ -85,7 +84,6 @@ type FlowSection {
 	id: ID
 	section: Section
 	flow: Flow
-	passFailFlag: Boolean
 	sortOrder: Int
 }
 
@@ -96,6 +94,7 @@ type EmployeeFlow {
 	section: Section
 	subSection: Subsection
 	status: String
+	passFailFlag: String
 	startDate: String
 	completedDate: String
 }
@@ -148,14 +147,24 @@ input SubsectionForm {
 input FlowForm {
 	flowId: ID
 	name: String
-	createdBy: String
-	createdDate: String
 }
 
 input FlowSectionForm {
 	flowSectionId: ID
 	flowId: ID
 	sectionId: ID
-	passFailFlag: Boolean
 	sortOrder: Int
+}
+
+input EmployeeFlowForm {
+	id: ID
+	flowId: ID
+	sectionId: ID
+	employeeId: ID
+	subsectionId: ID
+	status: String
+	passFailFlag: String
+	startDate: String
+	completedDate: String
+
 }

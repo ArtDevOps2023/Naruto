@@ -1,5 +1,6 @@
 package com.lmph.be.entity;
 
+import com.lmph.be.enums.PassFailFlag;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -40,6 +41,8 @@ public class EmployeeFlow {
     private Subsection subSection;
 
     private String status;
+
+    private char passFailFlag;
 
     private LocalDate startDate;
 
