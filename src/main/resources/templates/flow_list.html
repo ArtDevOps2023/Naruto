@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{flow_base::flowLayout(_,~{::main},_)}">
+
+<main>
+	<div class="card shadow">
+		<div class="card-header">
+			<span class="h3 mb-0 text-gray-800">Flow Management</span>
+			<a class="btn btn-info btn-sm float-right" th:href="@{/flow/create}">Add Flow</a>
+		</div>
+		<div class="card-body">
+			<table class="table table-bordered" id="dataTable">
+				<thead style="background-color: #d3d3d3">
+				<tr>
+					<th scope="col">Flow Name</th>
+					<th scope="col">Created By</th>
+					<th scope="col">Created Date</th>
+					<th scope="col">&nbsp;</th>
+				</tr>
+				</thead>
+				<tbody th:fragment="flowTableBody">
+					<tr th:each="flow : ${flows}">
+						<td th:text="${flow.name}"></td>
+						<td th:text="${flow.createdBy}"></td>
+						<td th:text="${flow.createdDate}"></td>
+						<td>
+							<a class="btn btn-primary btn-sm" th:href="@{/flow/update/{id}(id=${flow.flowId})}">Edit</a>
+							<a class="btn btn-danger btn-sm" th:href="@{/flow/delete/{id}(id=${flow.flowId})}">Remove</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</main>
+
+</html>
