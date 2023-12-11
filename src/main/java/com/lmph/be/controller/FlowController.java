@@ -1,12 +1,16 @@
 package com.lmph.be.controller;
 
+import com.lmph.be.dto.FlowAndSectionsInfo;
 import com.lmph.be.dto.FlowInfo;
 import com.lmph.be.dto.FlowSectionInfo;
+import com.lmph.be.dto.SectionInfo;
 import com.lmph.be.entity.Flow;
 import com.lmph.be.entity.FlowSection;
+import com.lmph.be.form.FlowAndSectionsForm;
 import com.lmph.be.form.FlowForm;
 import com.lmph.be.form.FlowSectionForm;
 import com.lmph.be.service.FlowService;
+import com.lmph.be.service.SectionService;
 import com.lmph.be.utility.SecurityUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,9 +30,55 @@ public class FlowController {
 
     FlowService flowService;
 
+    SectionService sectionService;
+
     @Autowired
-    public FlowController(FlowService flowService) {
+    public FlowController(FlowService flowService, SectionService sectionService) {
         this.flowService = flowService;
+        this.sectionService = sectionService;
+    }
+
+    @RequestMapping("/flow")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String flowManagement(Model model){
+        List<Flow> flowInfos = flowService.retrieveAllFlows();
+        model.addAttribute("flows", flowInfos);
+        return "flow_list";
+    }
+
+    @RequestMapping("/flow/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String flowManagementCreate(Model model){
+        List<SectionInfo> sections = sectionService.getAllSections();
+        model.addAttribute("sections", sections);
+        return "flow_form";
+    }
+
+    @RequestMapping("/flow/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String flowManagementDelete(@PathVariable Long id){
+        flowService.deleteFlow(id);
+        return "flow_list";
+    }
+
+    @RequestMapping("flow/update/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String retrieveFlowAndSectionsById(@PathVariable("id") Long flowId,
+                                              Model model){
+        FlowAndSectionsInfo flowAndSectionsInfo = this.flowService.getFlowAndItsSections(flowId);
+
+        List<SectionInfo> sections = sectionService.getAllSections();
+
+        model.addAttribute("sections", sections);
+        model.addAttribute("flowAndSections", flowAndSectionsInfo);
+
+        return "flow_update";
+    }
+
+    @PostMapping("flow/save")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String persistFlowAndSections(@RequestBody FlowAndSectionsForm form){
+        return "flow_list";
     }
 
     @QueryMapping

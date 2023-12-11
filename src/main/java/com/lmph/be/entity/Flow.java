@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Entity object for Flow
@@ -22,6 +23,9 @@ public class Flow {
     private Long flowId;
 
     private String name;
+
+    @OneToMany(mappedBy="flow", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<FlowSection> flowSections;
 
     private String createdBy;
 

@@ -76,6 +76,7 @@ type Subsection {
 type Flow {
 	flowId: ID
 	name: ID
+	flowSections: [FlowSection]
 	createdBy: String
 	createdDate: String
 }

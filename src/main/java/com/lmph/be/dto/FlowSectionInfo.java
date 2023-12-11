@@ -7,13 +7,11 @@ import lombok.Data;
 @Data
 public class FlowSectionInfo {
 
-    private Long id;
+    private Long flowSectionId;
 
     private Flow flow;
 
-    private Section section;
-
-    private Integer passFailFlag;
+    private SectionInfo section;
 
     private Integer sortOrder;
 

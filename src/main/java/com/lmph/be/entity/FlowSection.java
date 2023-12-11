@@ -21,15 +21,26 @@ public class FlowSection {
     private Long id;
 
     @JoinColumn(name = "section_id")
-    @OneToOne(targetEntity = Section.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Section section;
 
     @JoinColumn(name = "flow_id")
-    @OneToOne(targetEntity = Flow.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Flow flow;
 
     @Column(name = "flow_id", insertable = false, updatable = false)
     private Long flowId;
 
     private Integer sortOrder;
+
+    @Override
+    public String toString() {
+        return "FlowSection{" +
+                "id=" + id +
+                ", section=" + section +
+                ", flow=" + flow +
+                ", flowId=" + flowId +
+                ", sortOrder=" + sortOrder +
+                '}';
+    }
 }

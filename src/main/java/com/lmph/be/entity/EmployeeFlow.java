@@ -29,15 +29,15 @@ public class EmployeeFlow {
     private Long employeeId;
 
     @JoinColumn(name="flow_id")
-    @OneToOne(targetEntity = Flow.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Flow.class, fetch = FetchType.LAZY)
     private Flow flow;
 
     @JoinColumn(name="section_id")
-    @OneToOne(targetEntity = Section.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Section.class, fetch = FetchType.LAZY)
     private Section section;
 
     @JoinColumn(name="subsection_id")
-    @OneToOne(targetEntity = Subsection.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Subsection.class, fetch = FetchType.LAZY)
     private Subsection subSection;
 
     private String status;
