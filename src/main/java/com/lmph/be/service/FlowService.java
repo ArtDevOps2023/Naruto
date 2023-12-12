@@ -22,20 +22,18 @@ import java.util.Optional;
 @Service
 public class FlowService {
 
-    @Autowired
     private FlowDao flowDao;
 
-    @Autowired
     private FlowSectionDao flowSectionDao;
 
-//    @Autowired
-//    public FlowService(FlowDao flowDao, FlowSectionDao flowSectionDao) {
-//        this.flowDao = flowDao;
-//        this.flowSectionDao = flowSectionDao;
-//    }
+    @Autowired
+    public FlowService(FlowDao flowDao, FlowSectionDao flowSectionDao) {
+        this.flowDao = flowDao;
+        this.flowSectionDao = flowSectionDao;
+    }
 
-    public List<Flow> retrieveAllFlows(){
-        return this.flowDao.findAll();
+    public List<FlowInfo> retrieveAllFlows(){
+        return this.flowDao.findAll().stream().map(DTOUtil::toFlowInfo).toList();
     }
 
     public List<FlowSection> retrieveAllFlowSections(){
@@ -62,16 +60,16 @@ public class FlowService {
 
     public FlowSectionInfo upsertFlowSection(FlowSectionForm flowSectionForm){
         FlowSection flowSection = new FlowSection();
-        FlowSectionInfo flowSectionInfo = new FlowSectionInfo();
+        FlowSectionInfo flowSectionInfo;
 
-        BeanUtils.copyProperties(flowSectionForm, flowSection);
-
+        flowSection.setId(flowSectionForm.getId());
         flowSection.setFlow(new Flow(flowSectionForm.getFlowId()));
         flowSection.setSection(new Section(flowSectionForm.getSectionId()));
+        flowSection.setSortOrder(flowSectionForm.getSortOrder());
 
         flowSection = this.flowSectionDao.save(flowSection);
 
-        BeanUtils.copyProperties(flowSection, flowSectionInfo);
+        flowSectionInfo = DTOUtil.toFlowSectionInfo(flowSection);
 
         return flowSectionInfo;
     }

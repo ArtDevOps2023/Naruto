@@ -14,7 +14,7 @@ public class FlowSectionForm implements Serializable {
     @Serial
     private static final long serialVersionUID = 6244856997840076976L;
 
-    private Long flowSectionId;
+    private Long id;
 
     @NotNull(message = "Flow must be present.")
     private Long flowId;

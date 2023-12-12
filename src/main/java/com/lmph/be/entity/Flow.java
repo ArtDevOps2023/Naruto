@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +25,14 @@ public class Flow {
 
     private String name;
 
-    @OneToMany(mappedBy="flow", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<FlowSection> flowSections;
+    private String color;
 
     private String createdBy;
 
     private LocalDate createdDate;
+
+    @OneToMany(mappedBy="flow", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<FlowSection> flowSections = new ArrayList<>();
 
     public Flow() {
     }

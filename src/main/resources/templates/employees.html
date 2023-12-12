@@ -62,6 +62,13 @@
                     <span>Onboarding</span></a>
             </li>
 
+            <!-- Nav Item - Flow Management -->
+            <li class="nav-item">
+                <a class="nav-link" href="/flow">
+                    <i class="fas fa-fw fa-handshake"></i>
+                    <span>Flow Management</span></a>
+            </li>
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -250,6 +257,7 @@
 								`
 									<a class="btn btn-sm btn-primary" href="/employees/${employee.id}">Edit</a>
 									<a class="btn btn-sm btn-danger btnActionDelete" data-id="${employee.id}" href="#">Delete</a>
+									<a class="btn btn-sm btn-info" href="/employee/flow/view/${employee.id}">View Flow</a>
 								`
 								:		
 								`

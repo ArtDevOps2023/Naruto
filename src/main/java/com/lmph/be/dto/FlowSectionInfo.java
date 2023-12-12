@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class FlowSectionInfo {
 
-    private Long flowSectionId;
+    private Long id;
 
-    private Flow flow;
+    private FlowInfo flow;
 
     private SectionInfo section;
 

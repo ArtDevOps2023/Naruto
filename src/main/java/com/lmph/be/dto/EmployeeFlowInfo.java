@@ -8,6 +8,7 @@ import com.lmph.be.enums.PassFailFlag;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class EmployeeFlowInfo {
@@ -18,16 +19,6 @@ public class EmployeeFlowInfo {
 
     private Flow flow;
 
-    private Section section;
-
-    private Subsection subSection;
-
-    private String status;
-
-    private PassFailFlag passFailFlag;
-
-    private LocalDate startDate;
-
-    private LocalDate completedDate;
+    private Integer sortOrder;
 
 }

@@ -10,6 +10,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class EmployeeFlowForm implements Serializable {
@@ -19,32 +20,15 @@ public class EmployeeFlowForm implements Serializable {
 
     private Long id;
 
-    @NotNull(message = "Flow name must be selected.")
-    @Positive
-    private Long flowId;
-
-    @NotNull(message = "Section name must be selected.")
-    @Positive
-    private Long sectionId;
-
-    @NotNull(message = "Employee must be selected.")
     @Positive
     private Long employeeId;
 
-    @NotNull(message = "Subsection must be selected.")
     @Positive
-    private Long subsectionId;
+    private Long flowId;
 
-    @NotEmpty
-    private String status;
+    @Positive
+    private Integer sortOrder;
 
-    @NotNull
-    private PassFailFlag passFailFlag = PassFailFlag.Unset;
-
-    @PastOrPresent
-    private LocalDate startDate;
-
-    @PastOrPresent
-    private LocalDate completedDate;
+    private List<FlowForm> flows;
 
 }

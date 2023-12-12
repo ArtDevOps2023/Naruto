@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{employee_base::empLayout(_,~{::main},_)}">
+
+<main>
+
+	<th:block th:each="empFlow : ${empFlows}">
+
+		<div class="card mb-3">
+
+			<div class="card-header">
+				<span class="h3 mb-0 text-gray-800" th:text="${empFlow.flow.name}"></span>
+			</div>
+
+			<div class="card-body">
+
+				<th:block th:each="fSec : ${empFlow.flow.flowSections}">
+
+					<div class="card mb-3" th:each="sec : ${fSec.section}">
+
+						<!--Section-->
+						<div class="card-header">
+							<span class="h3 mb-0 text-gray-800" th:text="${sec.name}"></span>
+						</div>
+						<div class="card-body">
+							<table class="table table-bordered">
+								<thead>
+								<th>Description</th>
+								<th>Details</th>
+								<th>Facilitator</th>
+								<th>Target Day</th>
+								<th>Target Sprint</th>
+								</thead>
+								<tbody>
+								<tr th:each="sub : ${sec.subsectionList}">
+									<td th:text="${sub.description}"></td>
+									<td th:text="${sub.details}"></td>
+									<td th:text="${sub.facilitator}"></td>
+									<td th:text="${sub.targetDay}"></td>
+									<td th:text="${sub.targetSprint}"></td>
+								</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+
+				</th:block>
+
+			</div>
+
+		</div>
+
+	</th:block>
+
+</main>
+
+</html>

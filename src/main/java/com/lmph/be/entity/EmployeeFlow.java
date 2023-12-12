@@ -22,29 +22,15 @@ public class EmployeeFlow {
     private Long id;
 
     @JoinColumn(name="employee_id")
-    @OneToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
     private Employee employee;
 
     @Column(insertable=false, updatable=false, name = "employee_id")
     private Long employeeId;
 
     @JoinColumn(name="flow_id")
-    @ManyToOne(targetEntity = Flow.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Flow flow;
 
-    @JoinColumn(name="section_id")
-    @ManyToOne(targetEntity = Section.class, fetch = FetchType.LAZY)
-    private Section section;
-
-    @JoinColumn(name="subsection_id")
-    @ManyToOne(targetEntity = Subsection.class, fetch = FetchType.LAZY)
-    private Subsection subSection;
-
-    private String status;
-
-    private char passFailFlag;
-
-    private LocalDate startDate;
-
-    private LocalDate completedDate;
+    private Integer sortOrder;
 }

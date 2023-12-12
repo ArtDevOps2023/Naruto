@@ -1,8 +1,10 @@
 package com.lmph.be.dto;
 
+import com.lmph.be.entity.FlowSection;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class FlowInfo {
@@ -11,7 +13,11 @@ public class FlowInfo {
 
     private String name;
 
+    private String color;
+
     private String createdBy;
 
     private LocalDate createdDate;
+
+    private List<FlowSection> flowSections;
 }

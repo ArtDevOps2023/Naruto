@@ -3,9 +3,11 @@ package com.lmph.be.controller;
 import java.util.List;
 
 import com.lmph.be.dto.EmployeeFlowInfo;
+import com.lmph.be.dto.FlowInfo;
 import com.lmph.be.entity.EmployeeFlow;
 import com.lmph.be.form.EmployeeFlowForm;
 import com.lmph.be.service.EmployeeFlowService;
+import com.lmph.be.service.FlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -20,6 +22,9 @@ import com.lmph.be.service.EmployeeService;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * User Controller class
@@ -33,6 +38,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeFlowService employeeFlowService;
+
+	@Autowired
+	private FlowService flowService;
 	
 	/**
 	 * GraphQL controller for fetching single employee
@@ -68,9 +76,17 @@ public class EmployeeController {
 		return true;
 	}
 
+	@RequestMapping("/employee/flow/view/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String viewEmployeeFlow(@PathVariable("id") Long empId, Model model){
+		List<EmployeeFlowInfo> employeeFlows= this.employeeFlowsById(empId);
+		model.addAttribute("empFlows", employeeFlows);
+		return "employee_flow";
+	}
+
 	//TODO JJJ: create javadoc
 	@QueryMapping
-	public List<EmployeeFlow> employeeFlowsById(@Argument Long id){
+	public List<EmployeeFlowInfo> employeeFlowsById(@Argument Long id){
 		return this.employeeFlowService.getEmployeeFlowsByEmployeeId(id);
 	}
 
@@ -84,6 +100,7 @@ public class EmployeeController {
 				throw new Exception("Employee Flow is null.");
 		}
 		catch(Exception ex){
+			System.out.println(ex.getMessage());
 			return null;
 		}
 	}

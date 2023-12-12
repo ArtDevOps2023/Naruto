@@ -92,8 +92,13 @@ type EmployeeFlow {
 	id: ID
 	employee: Employee
 	flow:  Flow
-	section: Section
-	subSection: Subsection
+	sortOrder: Int
+}
+
+input EmployeeSubsectionStatus{
+	id: ID
+	employeeId: ID
+	subsectionId: ID
 	status: String
 	passFailFlag: String
 	startDate: String
@@ -148,6 +153,7 @@ input SubsectionForm {
 input FlowForm {
 	flowId: ID
 	name: String
+	color: String
 }
 
 input FlowSectionForm {
@@ -160,12 +166,6 @@ input FlowSectionForm {
 input EmployeeFlowForm {
 	id: ID
 	flowId: ID
-	sectionId: ID
 	employeeId: ID
-	subsectionId: ID
-	status: String
-	passFailFlag: String
-	startDate: String
-	completedDate: String
-
+	sortOrder: Int
 }

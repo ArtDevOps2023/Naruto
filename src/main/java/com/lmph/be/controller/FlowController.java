@@ -41,7 +41,7 @@ public class FlowController {
     @RequestMapping("/flow")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String flowManagement(Model model){
-        List<Flow> flowInfos = flowService.retrieveAllFlows();
+        List<FlowInfo> flowInfos = flowService.retrieveAllFlows();
         model.addAttribute("flows", flowInfos);
         return "flow_list";
     }
@@ -82,7 +82,7 @@ public class FlowController {
     }
 
     @QueryMapping
-    public List<Flow> allFlows(){
+    public List<FlowInfo> allFlows(){
         return this.flowService.retrieveAllFlows();
     }
 

@@ -2,14 +2,18 @@ package com.lmph.be.service;
 
 import com.lmph.be.dao.EmployeeFlowDao;
 import com.lmph.be.dto.EmployeeFlowInfo;
+import com.lmph.be.dto.EmployeeInfo;
 import com.lmph.be.entity.*;
 import com.lmph.be.enums.PassFailFlag;
 import com.lmph.be.form.EmployeeFlowForm;
+import com.lmph.be.utility.DTOUtil;
 import com.lmph.be.utility.FormUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,8 +38,11 @@ public class EmployeeFlowService {
      * @author Jeffrey John Javison
      * @since 06-Dec-2023
      */
-    public List<EmployeeFlow> getEmployeeFlowsByEmployeeId(Long employeeId){
-        return this.employeeFlowDao.findByemployeeId(employeeId);
+    public List<EmployeeFlowInfo> getEmployeeFlowsByEmployeeId(Long employeeId){
+
+        List<EmployeeFlow> employeeFlows = this.employeeFlowDao.findByemployeeId(employeeId);
+
+        return employeeFlows.stream().map(DTOUtil::toEmployeeFlowInfo).toList();
     }
 
     /**
@@ -51,8 +58,6 @@ public class EmployeeFlowService {
         employeeFlow = this.employeeFlowDao.save(employeeFlow);
 
         BeanUtils.copyProperties(employeeFlow, employeeFlowInfo);
-
-        employeeFlowInfo.setPassFailFlag(PassFailFlag.getReverse(employeeFlow.getPassFailFlag()));
 
         return employeeFlowInfo;
     }
