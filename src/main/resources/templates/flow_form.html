@@ -4,7 +4,7 @@
       th:replace="~{base::layout(_,~{::main},_,~{::script})}">
 
 <main class="w-50">
-	<form th:action="@{/flow/save}" th:object="${flowInfo}" method="post">
+	<form th:action="@{/onboarding/flow/save}" th:object="${flowInfo}" method="post">
 		<div class="card shadow">
 			<div class="card-header">
 				<span class="h3 mb-0 text-gray-800">
@@ -62,7 +62,7 @@
 
 			<div class="card-footer">
 				<div class="text-right">
-					<a class="btn btn-secondary btn-sm" th:href="@{/flow}">Back</a>
+					<a class="btn btn-secondary btn-sm" th:href="@{/onboarding}">Back</a>
 					<button type="submit" class="btn btn-info btn-sm">Save Flow</button>
 				</div>
 			</div>

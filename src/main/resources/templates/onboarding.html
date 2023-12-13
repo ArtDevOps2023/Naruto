@@ -9,14 +9,41 @@
 			<h1 class="h3 mb-0 text-gray-800">Onboarding</h1>
 		</div>
 
-		<div sec:authorize="hasRole('ROLE_ADMIN')" class="card shadow mb-4">
-			<div>
-				<h4 class="h4 py-3 ml-3 text-gray-800">Onboarding Flow</h4>
+		<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+
+			<div class="alert alert-success" role="alert" th:text="${customMessage}" th:if="${not #strings.isEmpty(customMessage)}">
 			</div>
-			<div class="card-header py-3">
-				<a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/flow" class="btn btn-primary px-4">  Add Flow +  </a>
+			<div class="card shadow mb-4">
+				<div class="card-header">
+					<span class="h3 mb-0 text-gray-800">Flow</span>
+					<a class="btn btn-info btn-sm float-right" th:href="@{/onboarding/flow/create}">Add Flow</a>
+				</div>
+				<div class="card-body">
+					<table class="table table-bordered">
+						<thead style="background-color: #d3d3d3">
+						<tr>
+							<th scope="col">Flow Name</th>
+							<th scope="col">Created By</th>
+							<th scope="col">Created Date</th>
+							<th scope="col">&nbsp;</th>
+						</tr>
+						</thead>
+						<tbody th:fragment="flowTableBody">
+						<tr th:each="flow : ${flows}">
+							<td th:text="${flow.name}"></td>
+							<td th:text="${flow.createdBy}"></td>
+							<td th:text="${flow.createdDate}"></td>
+							<td>
+								<a class="btn btn-primary btn-sm" th:href="@{/onboarding/flow/update/{id}(id=${flow.flowId})}">Edit</a>
+								<a class="btn btn-danger btn-sm"
+								   th:href="@{/onboarding/flow/delete/{id}?name={name}(id=${flow.flowId},name=${flow.name})}">Remove</a>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
+		</th:block>
 
 		<div sec:authorize="hasRole('ROLE_ADMIN')" class="card shadow mb-4">
 			<div>
