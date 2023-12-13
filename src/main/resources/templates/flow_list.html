@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{flow_base::flowLayout(_,~{::main},_)}">
+      th:replace="~{base::layout(_,~{::main},_,_)}">
 
 <main>
+	<div class="alert alert-success" role="alert" th:text="${customMessage}" th:if="${not #strings.isEmpty(customMessage)}">
+	</div>
 	<div class="card shadow">
 		<div class="card-header">
 			<span class="h3 mb-0 text-gray-800">Flow Management</span>
@@ -26,7 +28,7 @@
 						<td th:text="${flow.createdDate}"></td>
 						<td>
 							<a class="btn btn-primary btn-sm" th:href="@{/flow/update/{id}(id=${flow.flowId})}">Edit</a>
-							<a class="btn btn-danger btn-sm" th:href="@{/flow/delete/{id}(id=${flow.flowId})}">Remove</a>
+							<a class="btn btn-danger btn-sm" th:href="@{/flow/delete/{id}?name={name}(id=${flow.flowId},name=${flow.name})}">Remove</a>
 						</td>
 					</tr>
 				</tbody>

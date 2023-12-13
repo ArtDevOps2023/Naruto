@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="flowLayout(head,mainContent,scrs)" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="layout(base_head,base_content,base_scripts,custom_scripts)">
 
-	<head th:replace="${head}">
+	<head th:replace="${base_head}">
 
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-		<title>LMPH - Flow Management</title>
+		<title>LMPH - Employee</title>
 
 		<!-- Custom fonts for this template-->
 		<link th:href="@{~/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
@@ -37,13 +41,6 @@
 
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
-
-				<!-- Nav Item - Dashboard -->
-				<li class="nav-item active">
-					<a class="nav-link" href="/home">
-						<i class="fas fa-fw fa-tachometer-alt"></i>
-						<span>Dashboard</span></a>
-				</li>
 
 				<!-- Nav Item - Dashboard -->
 				<li class="nav-item">
@@ -83,6 +80,7 @@
 							<i class="fa fa-bars"></i>
 						</button>
 
+
 						<!-- Topbar Navbar -->
 						<ul class="navbar-nav ml-auto">
 							<!-- Nav Item - User Information -->
@@ -91,7 +89,7 @@
 								   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<div class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${#authentication.principal.username}"></div>
 									<img class="img-profile rounded-circle"
-									     src="img/undraw_profile.svg">
+									     th:src="@{~/img/undraw_profile.svg}">
 								</a>
 								<!-- Dropdown - User Information -->
 								<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -111,7 +109,7 @@
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
 
-						<main th:replace="${mainContent}"></main>
+						<main th:replace="${base_content}"></main>
 
 					</div>
 					<!-- /.container-fluid -->
@@ -140,17 +138,19 @@
 			<i class="fas fa-angle-up"></i>
 		</a>
 
-		<th:block th:replace="${scrs}">
+		<th:block th:replace="${base_scripts}">
 			<!-- Bootstrap core JavaScript-->
 			<script th:src="@{~/vendor/jquery/jquery.min.js}"></script>
-			<script th:src="@{~/bootstrap/js/bootstrap.bundle.min.js}"></script>
+			<script th:src="@{~/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 			<!-- Core plugin JavaScript-->
-			<script th:src="@{~/jquery-easing/jquery.easing.min.js}"></script>
+			<script th:src="@{~/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
 			<!-- Custom scripts for all pages-->
 			<script th:src="@{~/js/sb-admin-2.min.js}"></script>
 		</th:block>
+
+		<th:block th:replace="${custom_scripts}" />
 
 	</body>
 
