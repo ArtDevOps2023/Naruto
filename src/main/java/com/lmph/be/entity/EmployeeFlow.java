@@ -33,4 +33,15 @@ public class EmployeeFlow {
     private Flow flow;
 
     private Integer sortOrder;
+
+    @Override
+    public String toString() {
+        return "EmployeeFlow{" +
+                "id=" + id +
+                ", employee=" + employee +
+                ", employeeId=" + employeeId +
+                ", flow=" + flow +
+                ", sortOrder=" + sortOrder +
+                '}';
+    }
 }

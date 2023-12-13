@@ -31,7 +31,7 @@ public class Flow {
 
     private LocalDate createdDate;
 
-    @OneToMany(mappedBy="flow", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="flow", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FlowSection> flowSections = new ArrayList<>();
 
     public Flow() {
@@ -46,5 +46,17 @@ public class Flow {
         this.name = name;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Flow{" +
+                "flowId=" + flowId +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdDate=" + createdDate +
+                ", flowSections=Count:" + flowSections.size() +
+                '}';
     }
 }

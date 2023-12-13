@@ -99,4 +99,14 @@ public class Employee {
 	public Employee(Long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", middleName='" + middleName + '\'' +
+				'}';
+	}
 }

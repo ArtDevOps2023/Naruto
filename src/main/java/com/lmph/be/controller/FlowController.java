@@ -56,7 +56,7 @@ public class FlowController {
     @PreAuthorize("hasRole('ADMIN')")
     public String flowManagementCreate(Model model){
         List<SectionInfo> sections = sectionService.getAllSections();
-        model.addAttribute("sections", sections);
+        model.addAttribute("sectionsList", sections);
         model.addAttribute("flowInfo", new FlowInfo());
         return "flow_form";
     }
@@ -97,6 +97,7 @@ public class FlowController {
                 this.flowService.upsertFlow(form);
                 redirectAttributes.addFlashAttribute("customMessage", form.getName() + " successfully "+ action);
             } catch (Exception ex) {
+                System.out.println(ex.getMessage());
                 return ControllerUtil.showInternalErrorMessage(redirectAttributes, ex.getMessage(), "/flow");
             }
         }

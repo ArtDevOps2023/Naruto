@@ -94,10 +94,10 @@
 
 		$(baseSection).append(hiddenFields).append(selectLabel).append(hiddenSelectControl).append(removeSection);
 
-		if($('.custom-step-element:last').length > 0) {
+		if($('.custom-step-element:last').length > 0) 
 			$('.custom-step-element:last').after(baseSection);
-		} else
-			$('#cardBody').after(baseSection);
+		else
+			$('#cardBody > div.col > div.form-group').after(baseSection);
 			
 		//update tracker value
 		$('[name=counter_tracker]').val(counter_tracker + 1);

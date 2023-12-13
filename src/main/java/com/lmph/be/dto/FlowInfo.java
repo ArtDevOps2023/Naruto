@@ -3,6 +3,7 @@ package com.lmph.be.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,5 +19,5 @@ public class FlowInfo {
 
     private LocalDate createdDate;
 
-    private List<FlowSectionInfo> flowSectionInfos;
+    private List<FlowSectionInfo> flowSectionInfos = new ArrayList<>();
 }

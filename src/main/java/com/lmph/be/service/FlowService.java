@@ -13,11 +13,13 @@ import com.lmph.be.form.FlowForm;
 import com.lmph.be.form.FlowSectionForm;
 import com.lmph.be.utility.DTOUtil;
 import com.lmph.be.utility.FormUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -51,24 +53,31 @@ public class FlowService {
         flow.setCreatedBy(flowInfo.getCreatedBy());
         flow.setCreatedDate(LocalDate.now());
 
-        if(flowInfo.getFlowSectionInfos() != null && !flowInfo.getFlowSectionInfos().isEmpty()) {
-            List<FlowSection> flowSections = new LinkedList<>();
-            for(FlowSectionInfo fsi: flowInfo.getFlowSectionInfos()){
+        flow = this.flowDao.save(flow);
+
+        if(flowInfo.getFlowSectionInfos() != null && !flowInfo.getFlowSectionInfos().isEmpty()){
+            this.upsertFlowSections(flowInfo.getFlowSectionInfos(), flow.getFlowId());
+        }
+
+        return flowInfo;
+    }
+
+    public void upsertFlowSections(List<FlowSectionInfo> flowSectionInfos, Long flowId) {
+        List<FlowSection> flowSections = new ArrayList<>();
+
+        if(flowSectionInfos != null && !flowSectionInfos.isEmpty()) {
+            for(FlowSectionInfo fsi: flowSectionInfos){
                 FlowSection flowSection = new FlowSection();
                 flowSection.setId(fsi.getId());
-                flowSection.setFlow(new Flow(fsi.getFlowInfo().getFlowId()));
+                flowSection.setFlow(new Flow(flowId));
                 flowSection.setSection(new Section(fsi.getSectionInfo().getSectionId()));
                 flowSection.setSortOrder(fsi.getSortOrder());
 
                 flowSections.add(flowSection);
             }
-
-            flow.setFlowSections(flowSections);
         }
 
-        this.flowDao.save(flow);
-
-        return flowInfo;
+        this.flowSectionDao.saveAll(flowSections);
     }
 
     public FlowInfo upsertFlow(FlowForm flowForm){
@@ -84,6 +93,7 @@ public class FlowService {
         return flowInfo;
     }
 
+    @Transactional
     public void deleteFlow(Long flowId){
         this.flowSectionDao.deleteByflowId(flowId);
         this.flowDao.deleteById(flowId);
