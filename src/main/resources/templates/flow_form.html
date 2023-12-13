@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{base::layout(_,~{::main},_,~{::script})}">>
+      th:replace="~{base::layout(_,~{::main},_,~{::script})}">
 
 <main class="w-50">
 	<form th:action="@{/flow/save}" th:object="${flowInfo}" method="post">

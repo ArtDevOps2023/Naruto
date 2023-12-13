@@ -43,8 +43,8 @@ public class IndexController {
 	 * @return
 	 */
 	@GetMapping("/home")
-	public String home(SecurityContextHolderAwareRequestWrapper awareRequestWrapper) {
-		return awareRequestWrapper.isUserInRole("ADMIN") ? "redirect:/employees":"home";
+	public String home() {
+		return "home";
 	}
 	
 	/**

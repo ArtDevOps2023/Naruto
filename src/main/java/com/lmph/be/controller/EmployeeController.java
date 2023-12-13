@@ -77,7 +77,7 @@ public class EmployeeController {
 	}
 
 	@RequestMapping("/employee/flow/view/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	public String viewEmployeeFlow(@PathVariable("id") Long empId, Model model){
 		List<EmployeeFlowInfo> employeeFlows= this.employeeFlowsById(empId);
 		model.addAttribute("empFlows", employeeFlows);

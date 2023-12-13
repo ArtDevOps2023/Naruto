@@ -42,26 +42,41 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
 
-				<!-- Nav Item - Dashboard -->
-				<li class="nav-item">
-					<a class="nav-link" href="/employees">
-						<i class="fas fa-fw fa-users"></i>
-						<span>Employees</span></a>
-				</li>
+				<th:block sec:authorize="isAuthenticated()">
+					<!-- Nav Item - Dashboard -->
+					<li class="nav-item active">
+						<a class="nav-link" href="/home">
+							<i class="fas fa-fw fa-tachometer-alt"></i>
+							<span>Dashboard</span></a>
+					</li>
+				</th:block>
 
-				<!-- Nav Item - Dashboard -->
-				<li class="nav-item">
-					<a class="nav-link" href="/onboarding">
-						<i class="fas fa-fw fa-handshake"></i>
-						<span>Onboarding</span></a>
-				</li>
+				<th:block sec:authorize="isAuthenticated()">
+					<!-- Nav Item - Employees -->
+					<li class="nav-item">
+						<a class="nav-link" href="/employees">
+							<i class="fas fa-fw fa-users"></i>
+							<span>Employees</span></a>
+					</li>
+				</th:block>
 
-				<!-- Nav Item - Flow Management -->
-				<li class="nav-item">
-					<a class="nav-link" href="/flow">
-						<i class="fas fa-fw fa-handshake"></i>
-						<span>Flow Management</span></a>
-				</li>
+				<th:block sec:authorize="hasRole('ADMIN')">
+					<!-- Nav Item - Dashboard -->
+					<li class="nav-item">
+						<a class="nav-link" href="/onboarding">
+							<i class="fas fa-fw fa-handshake"></i>
+							<span>Onboarding</span></a>
+					</li>
+				</th:block>
+
+				<th:block sec:authorize="hasRole('ADMIN')">
+					<!-- Nav Item - Flow Management -->
+					<li class="nav-item">
+						<a class="nav-link" href="/flow">
+							<i class="fas fa-fw fa-handshake"></i>
+							<span>Flow Management</span></a>
+					</li>
+				</th:block>
 
 			</ul>
 			<!-- End of Sidebar -->

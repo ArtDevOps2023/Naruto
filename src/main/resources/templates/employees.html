@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{base::layout(_,~{::main},_,~{::script})}">>
+      th:replace="~{base::layout(_,~{::main},_,~{::script})}">
 
     <main>
 
@@ -112,11 +112,12 @@
 								`
 									<a class="btn btn-sm btn-primary" href="/employees/${employee.id}">Edit</a>
 									<a class="btn btn-sm btn-danger btnActionDelete" data-id="${employee.id}" href="#">Delete</a>
-									<a class="btn btn-sm btn-info" href="/employee/flow/view/${employee.id}">View Flow</a>
+									<a class="btn btn-sm btn-info" href="/employee/flow/view/${employee.id}">View Onboarding</a>
 								`
 								:		
 								`
 									<a class="btn btn-sm btn-primary" href="/employees/${employee.id}">View</a>
+									<a class="btn btn-sm btn-info" href="/employee/flow/view/${employee.id}">View Onboarding</a>
 								`
 				
 				return `
