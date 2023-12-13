@@ -64,6 +64,18 @@ public class EmployeeFlowService {
 
     /**
      * @author Jeffrey John Javison
+     * @since 13-Dec-2023
+     * @param infos
+     */
+    public void upsertEmployeeFlows(List<EmployeeFlowInfo> infos){
+
+        List<EmployeeFlow> employeeFlows = infos.stream().map(DTOUtil::employeeInfotoEmployeeFlow).toList();
+
+        this.employeeFlowDao.saveAll(employeeFlows);
+    }
+
+    /**
+     * @author Jeffrey John Javison
      * @since 11-Dec-2023
      * @param employeeId
      */

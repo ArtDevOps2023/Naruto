@@ -91,6 +91,7 @@
 
 		hiddenSelectControl.attr('name', 'flowSectionInfos['+ nextIndex +'].sectionInfo.sectionId');
 		hiddenSelectControl.removeClass('d-none');
+		hiddenSelectControl.attr('id', '');
 
 		$(baseSection).append(hiddenFields).append(selectLabel).append(hiddenSelectControl).append(removeSection);
 
@@ -108,6 +109,10 @@
 		let thisControl = $(e);
 		let customStepElementParent = $(thisControl).parent().parent();
 		customStepElementParent.remove();
+
+		//update tracker value
+		let counter_tracker = parseInt($('[name=counter_tracker]').val());
+		$('[name=counter_tracker]').val(counter_tracker - 1);
 	}
 </script>
 

@@ -45,14 +45,14 @@
 			</div>
 		</th:block>
 
-		<div sec:authorize="hasRole('ROLE_ADMIN')" class="card shadow mb-4">
-			<div>
-				<h4 class="h4 py-3 ml-3 text-gray-800">Sections</h4>
-			</div>
-			<div class="card-header py-3">
-				<a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section" class="btn btn-primary px-4">  Add Section +  </a>
-				<hr/>
-				<div>
+		<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="card shadow mb-4">
+				<div class="card-header">
+					<span class="h3 mb-0 text-gray-800">Sections</span>
+					<a sec:authorize="hasRole('ROLE_ADMIN')" href="/onboarding/section"
+					   class="btn btn-sm btn-info float-right">Manage Section</a>
+				</div>
+				<div class="card-body">
 					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 						<thead style="background-color: #d3d3d3">
 						<tr>
@@ -72,7 +72,8 @@
 					</table>
 				</div>
 			</div>
-		</div>
+		</th:block>
+
 
 	</main>
 

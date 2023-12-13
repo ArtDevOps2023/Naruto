@@ -6,9 +6,9 @@
 
 	<th:block th:each="empFlow : ${empFlows}">
 
-		<div class="card mb-3">
+		<div class="card shadow mb-3">
 
-			<div class="card-header">
+			<div class="card-header text-center">
 				<span class="h3 mb-0 text-gray-800" th:text="${empFlow.flow.name}"></span>
 			</div>
 
@@ -18,10 +18,12 @@
 
 					<div class="card mb-3" th:each="sec : ${fSec.section}">
 
-						<!--Section-->
-						<div class="card-header">
-							<span class="h3 mb-0 text-gray-800" th:text="${sec.name}"></span>
-						</div>
+						<th:block th:unless="${empFlow.flow.name == sec.name}">
+							<!--Section-->
+							<div class="card-header">
+								<span class="h3 mb-0 text-gray-800" th:text="${sec.name}"></span>
+							</div>
+						</th:block>
 						<div class="card-body">
 							<table class="table table-bordered">
 								<thead>

@@ -11,11 +11,16 @@
 
         </div>
 
+        <div class="alert alert-success" role="alert" th:text="${customMessage}" th:if="${not #strings.isEmpty(customMessage)}">
+        </div>
+
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <a sec:authorize="hasRole('ROLE_ADMIN')" href="/employees/add" class="btn btn-primary px-4">  Add +  </a>
-            </div>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <div class="card-header">
+                    <a class="btn btn-info btn-sm float-right" th:href="@{/onboarding/flow/create}">Add Employee</a>
+                </div>
+            </th:block>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -112,7 +117,7 @@
 								`
 									<a class="btn btn-sm btn-primary" href="/employees/${employee.id}">Edit</a>
 									<a class="btn btn-sm btn-danger btnActionDelete" data-id="${employee.id}" href="#">Delete</a>
-									<a class="btn btn-sm btn-info" href="/employee/flow/view/${employee.id}">View Onboarding</a>
+									<a class="btn btn-sm btn-info" href="/employee/flow/configure/${employee.id}">Configure</a>
 								`
 								:		
 								`

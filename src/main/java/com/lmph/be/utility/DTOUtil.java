@@ -1,10 +1,7 @@
 package com.lmph.be.utility;
 
 import com.lmph.be.dto.*;
-import com.lmph.be.entity.EmployeeFlow;
-import com.lmph.be.entity.Flow;
-import com.lmph.be.entity.FlowSection;
-import com.lmph.be.entity.Section;
+import com.lmph.be.entity.*;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Comparator;
@@ -86,6 +83,17 @@ public class DTOUtil {
         BeanUtils.copyProperties(employeeFlow, employeeFlowInfo);
 
         return employeeFlowInfo;
+    }
+
+    public static EmployeeFlow employeeInfotoEmployeeFlow(EmployeeFlowInfo employeeFlowInfo) {
+        EmployeeFlow employeeFlow = new EmployeeFlow();
+
+        employeeFlow.setId(employeeFlowInfo.getId());
+        employeeFlow.setEmployee(new Employee(employeeFlowInfo.getEmployee().getId()));
+        employeeFlow.setFlow(new Flow(employeeFlowInfo.getFlow().getFlowId()));
+        employeeFlow.setSortOrder(employeeFlowInfo.getSortOrder());
+
+        return employeeFlow;
     }
 
     /**

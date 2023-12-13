@@ -78,7 +78,7 @@ public class OnboardingController {
      * @param subsectionForm
      * @return
      */
-    @GetMapping("//section/{sectionId}/subsection")
+    @GetMapping("/section/{sectionId}/subsection")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String subsectionForm(@PathVariable Long sectionId, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
         subsectionForm.setSectionId(sectionId);

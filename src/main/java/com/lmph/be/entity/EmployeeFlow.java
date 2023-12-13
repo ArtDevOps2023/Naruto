@@ -22,14 +22,14 @@ public class EmployeeFlow {
     private Long id;
 
     @JoinColumn(name="employee_id")
-    @ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Employee employee;
 
     @Column(insertable=false, updatable=false, name = "employee_id")
     private Long employeeId;
 
     @JoinColumn(name="flow_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Flow flow;
 
     private Integer sortOrder;
