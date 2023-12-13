@@ -1,6 +1,5 @@
 package com.lmph.be.dto;
 
-import com.lmph.be.entity.FlowSection;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -19,5 +18,5 @@ public class FlowInfo {
 
     private LocalDate createdDate;
 
-    private List<FlowSection> flowSections;
+    private List<FlowSectionInfo> flowSectionInfos;
 }

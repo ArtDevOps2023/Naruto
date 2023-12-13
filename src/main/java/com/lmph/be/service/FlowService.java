@@ -12,10 +12,13 @@ import com.lmph.be.entity.Section;
 import com.lmph.be.form.FlowForm;
 import com.lmph.be.form.FlowSectionForm;
 import com.lmph.be.utility.DTOUtil;
+import com.lmph.be.utility.FormUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,11 +36,39 @@ public class FlowService {
     }
 
     public List<FlowInfo> retrieveAllFlows(){
-        return this.flowDao.findAll().stream().map(DTOUtil::toFlowInfo).toList();
+        return this.flowDao.findAll().stream().map(DTOUtil::toFlowInfoNullifyFlow).toList();
     }
 
     public List<FlowSection> retrieveAllFlowSections(){
         return this.flowSectionDao.findAll();
+    }
+
+    public FlowInfo upsertFlow(FlowInfo flowInfo){
+
+        Flow flow = new Flow();
+        flow.setFlowId(flowInfo.getFlowId());
+        flow.setName(flowInfo.getName());
+        flow.setCreatedBy(flowInfo.getCreatedBy());
+        flow.setCreatedDate(LocalDate.now());
+
+        if(flowInfo.getFlowSectionInfos() != null && !flowInfo.getFlowSectionInfos().isEmpty()) {
+            List<FlowSection> flowSections = new LinkedList<>();
+            for(FlowSectionInfo fsi: flowInfo.getFlowSectionInfos()){
+                FlowSection flowSection = new FlowSection();
+                flowSection.setId(fsi.getId());
+                flowSection.setFlow(new Flow(fsi.getFlowInfo().getFlowId()));
+                flowSection.setSection(new Section(fsi.getSectionInfo().getSectionId()));
+                flowSection.setSortOrder(fsi.getSortOrder());
+
+                flowSections.add(flowSection);
+            }
+
+            flow.setFlowSections(flowSections);
+        }
+
+        this.flowDao.save(flow);
+
+        return flowInfo;
     }
 
     public FlowInfo upsertFlow(FlowForm flowForm){
@@ -78,16 +109,9 @@ public class FlowService {
         this.flowSectionDao.deleteById(flowSectionId);
     }
 
-    public FlowAndSectionsInfo getFlowAndItsSections(Long flowId){
-
+    public FlowInfo getFlowAndItsSections(Long flowId){
         Optional<Flow> flow = this.flowDao.findById(flowId);
-        FlowAndSectionsInfo flowAndSectionsInfo = null;
-
-        if(flow.isPresent()){
-            flowAndSectionsInfo = DTOUtil.toFlowAndSectionsInfo(flow.get());
-        }
-
-        return flowAndSectionsInfo;
+        return flow.map(DTOUtil::toFlowInfoNullifyFlow).orElse(null);
     }
 
 }

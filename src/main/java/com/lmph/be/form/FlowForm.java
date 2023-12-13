@@ -8,6 +8,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class FlowForm implements Serializable {
@@ -20,6 +21,8 @@ public class FlowForm implements Serializable {
     @NotEmpty(message = "Flow name must not be empty.")
     @Size(max = 100, message = "Flow name must be less than or equal to 100 characters.")
     private String name;
+
+    private List<FlowSectionForm> flowSectionForms;
 
     private String createdBy;
 

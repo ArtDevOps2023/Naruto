@@ -46,4 +46,12 @@ public class FormUtil {
         return flow;
     }
 
+    public static FlowForm toFlowForm(Flow flow) {
+        FlowForm form = new FlowForm();
+
+        BeanUtils.copyProperties(flow, form);
+
+        return form;
+    }
+
 }

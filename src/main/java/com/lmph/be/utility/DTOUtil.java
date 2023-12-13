@@ -38,8 +38,26 @@ public class DTOUtil {
     public static FlowSectionInfo toFlowSectionInfo(FlowSection flowSection){
         FlowSectionInfo flowSectionInfo = new FlowSectionInfo();
         flowSectionInfo.setId(flowSection.getId());
-        flowSectionInfo.setFlow(DTOUtil.toFlowInfo(flowSection.getFlow()));
-        flowSectionInfo.setSection(DTOUtil.toSectionInfo(flowSection.getSection()));
+
+        if(flowSection.getFlow()!=null)
+            flowSectionInfo.setFlowInfo(DTOUtil.toFlowInfo(flowSection.getFlow()));
+
+        flowSectionInfo.setSectionInfo(DTOUtil.toSectionInfo(flowSection.getSection()));
+        flowSectionInfo.setSortOrder(flowSection.getSortOrder());
+        return flowSectionInfo;
+    }
+
+    /**
+     * @author Jeffrey John Javison
+     * @since 11-Dec-2023
+     * @param flowSection
+     * @return
+     */
+    public static FlowSectionInfo toFlowSectionInfoNullifyFlow(FlowSection flowSection){
+        FlowSectionInfo flowSectionInfo = new FlowSectionInfo();
+        flowSectionInfo.setId(flowSection.getId());
+        flowSectionInfo.setFlowInfo(null);
+        flowSectionInfo.setSectionInfo(DTOUtil.toSectionInfo(flowSection.getSection()));
         flowSectionInfo.setSortOrder(flowSection.getSortOrder());
         return flowSectionInfo;
     }
@@ -79,7 +97,23 @@ public class DTOUtil {
     public static FlowInfo toFlowInfo(Flow flow){
         FlowInfo flowInfo = new FlowInfo();
 
-        BeanUtils.copyProperties(flow, flowInfo);
+        flowInfo.setFlowId(flow.getFlowId());
+        flowInfo.setName(flow.getName());
+        flowInfo.setCreatedBy(flow.getCreatedBy());
+        flowInfo.setCreatedDate(flow.getCreatedDate());
+        flowInfo.setFlowSectionInfos(flow.getFlowSections().stream().map(DTOUtil::toFlowSectionInfo).toList());
+
+        return flowInfo;
+    }
+
+    public static FlowInfo toFlowInfoNullifyFlow(Flow flow){
+        FlowInfo flowInfo = new FlowInfo();
+
+        flowInfo.setFlowId(flow.getFlowId());
+        flowInfo.setName(flow.getName());
+        flowInfo.setFlowSectionInfos(flow.getFlowSections().stream().map(DTOUtil::toFlowSectionInfoNullifyFlow).toList());
+        flowInfo.setCreatedBy(flow.getCreatedBy());
+        flowInfo.setCreatedDate(flow.getCreatedDate());
 
         return flowInfo;
     }
