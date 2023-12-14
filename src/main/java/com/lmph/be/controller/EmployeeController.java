@@ -4,12 +4,10 @@ import java.util.List;
 
 import com.lmph.be.dto.EmployeeFlowInfo;
 import com.lmph.be.dto.FlowInfo;
-import com.lmph.be.entity.EmployeeFlow;
 import com.lmph.be.form.EmployeeFlowForm;
 import com.lmph.be.service.EmployeeFlowService;
 import com.lmph.be.service.FlowService;
 import com.lmph.be.utility.ControllerUtil;
-import com.lmph.be.utility.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -87,7 +85,7 @@ public class EmployeeController {
 	}
 
 	@RequestMapping("/employee/flow/configure/{id}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String configureEmployeeFlow(@PathVariable("id") Long empId, Model model){
 		EmployeeInfo employeeInfo = this.employeeService.getEmployee(empId);
 		List<FlowInfo> flowInfos = this.flowService.retrieveAllFlows();
@@ -97,7 +95,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/employee/flow/configure/save")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String saveEmployeeFlow(@ModelAttribute EmployeeInfo employeeInfo,
 								   RedirectAttributes redirectAttributes){
 

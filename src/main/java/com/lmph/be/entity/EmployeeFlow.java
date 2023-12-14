@@ -1,10 +1,7 @@
 package com.lmph.be.entity;
 
-import com.lmph.be.enums.PassFailFlag;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 /**
  * Entity for Employee's Flow

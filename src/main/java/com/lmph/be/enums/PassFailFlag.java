@@ -1,6 +1,5 @@
 package com.lmph.be.enums;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
@@ -22,5 +21,14 @@ public enum PassFailFlag {
             case 'P' -> PassFailFlag.Passed;
             default -> PassFailFlag.Unset;
         };
+    }
+
+    public static char getLabelOfFlag(String color) {
+        for (PassFailFlag pff : values()) {
+            if (pff.name().equals(color)) {
+                return pff.rating;
+            }
+        }
+        return 0;
     }
 }

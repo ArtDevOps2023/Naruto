@@ -37,7 +37,7 @@ public class DTOUtil {
         flowSectionInfo.setId(flowSection.getId());
 
         if(flowSection.getFlow()!=null)
-            flowSectionInfo.setFlowInfo(DTOUtil.toFlowInfo(flowSection.getFlow()));
+            flowSectionInfo.setFlowInfo(DTOUtil.toFlowInfoNullifyFlow(flowSection.getFlow()));
 
         flowSectionInfo.setSectionInfo(DTOUtil.toSectionInfo(flowSection.getSection()));
         flowSectionInfo.setSortOrder(flowSection.getSortOrder());
