@@ -142,10 +142,6 @@ public class EmployeeController {
 		}
 	}
 
-	@QueryMapping
-	public List<EmployeeSubsectionStatusInfo> allEmployeeSubsectionStatuses(){
-		return this.employeeSubsectionStatusService.retrieveAllEmployeeSubsectionStatus();
-	}
 
 	@MutationMapping
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -160,6 +156,16 @@ public class EmployeeController {
 		} catch (Exception ex) {
 			return false;
 		}
+	}
+
+	@QueryMapping
+	public List<EmployeeSubsectionStatusInfo> allEmployeeSubsectionStatuses(){
+		return this.employeeSubsectionStatusService.retrieveAllEmployeeSubsectionStatus();
+	}
+
+	@QueryMapping
+	public List<EmployeeSubsectionStatusInfo> allEmployeeSubsectionStatusesById(@Argument Long id){
+		return this.employeeSubsectionStatusService.retrieveEmployeeSubsectionStatusByEmployeeId(id);
 	}
 
 	@MutationMapping

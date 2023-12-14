@@ -37,11 +37,14 @@ public class EmployeeSubsectionStatusService {
 
     /**
      * @author Jeffrey John Javison
-     * @since 12-Dec-2023
+     * @since 14-Dec-2023
      * @return
      */
-    public List<EmployeeSubsectionStatus> retrieveEmployeeSubsectionStatusByEmployeeId(Long employeeId){
-        return this.employeeSubsectionStatusDao.findByemployeeId(employeeId);
+    public List<EmployeeSubsectionStatusInfo> retrieveEmployeeSubsectionStatusByEmployeeId(Long employeeId){
+        List<EmployeeSubsectionStatus> employeeSubsectionStatuses =
+                this.employeeSubsectionStatusDao.findByemployeeId(employeeId);
+
+        return employeeSubsectionStatuses.stream().map(DTOUtil::fromEntityToInfo).toList();
     }
 
     public EmployeeSubsectionStatusInfo upsertEmployeeSubsectionStatus(EmployeeSubsectionStatusForm form) {

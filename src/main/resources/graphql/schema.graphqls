@@ -9,6 +9,7 @@ type Query {
 	allFlows: [Flow]
 	allFlowsSections: [FlowSection]
 	allEmployeeSubsectionStatuses: [EmployeeSubsectionStatus]
+	allEmployeeSubsectionStatusesById(id: ID): [EmployeeSubsectionStatus]
 }
 
 type Mutation {
