@@ -3,6 +3,7 @@ package com.lmph.be.utility;
 import com.lmph.be.dto.FlowSectionInfo;
 import com.lmph.be.entity.*;
 import com.lmph.be.form.EmployeeFlowForm;
+import com.lmph.be.form.EmployeeSubsectionStatusForm;
 import com.lmph.be.form.FlowForm;
 import org.springframework.beans.BeanUtils;
 
@@ -52,6 +53,19 @@ public class FormUtil {
         BeanUtils.copyProperties(flow, form);
 
         return form;
+    }
+
+    public static EmployeeSubsectionStatus fromFormToEntity(EmployeeSubsectionStatusForm form){
+        EmployeeSubsectionStatus employeeSubsectionStatus = new EmployeeSubsectionStatus();
+
+        employeeSubsectionStatus.setId(form.getId());
+        employeeSubsectionStatus.setEmployee(new Employee(form.getEmployeeId()));
+        employeeSubsectionStatus.setSubsection(new Subsection(form.getSubsectionId()));
+        employeeSubsectionStatus.setStatus(form.getStatus());
+        employeeSubsectionStatus.setStartDate(form.getStartDate());
+        employeeSubsectionStatus.setCompletedDate(form.getCompletedDate());
+
+        return employeeSubsectionStatus;
     }
 
 }

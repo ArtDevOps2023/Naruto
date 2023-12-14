@@ -32,6 +32,9 @@
 								<th>Facilitator</th>
 								<th>Target Day</th>
 								<th>Target Sprint</th>
+								<th>Status</th>
+								<th>Start Date</th>
+								<th>Completed Date</th>
 								</thead>
 								<tbody>
 								<tr th:each="sub : ${sec.subsectionList}">
@@ -40,6 +43,9 @@
 									<td th:text="${sub.facilitator}"></td>
 									<td th:text="${sub.targetDay}"></td>
 									<td th:text="${sub.targetSprint}"></td>
+									<td></td>
+									<td></td>
+									<td></td>
 								</tr>
 								</tbody>
 							</table>

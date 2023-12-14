@@ -12,7 +12,7 @@ import java.util.List;
 public class EmployeeSubsectionStatus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JoinColumn(name = "employee_id")
@@ -23,8 +23,8 @@ public class EmployeeSubsectionStatus {
     private Long employeeId;
 
     @JoinColumn(name = "subsection_id")
-    @ManyToOne(targetEntity = Subsection.class, fetch = FetchType.LAZY)
-    private List<Subsection> subsections;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Subsection subsection;
 
     private String status;
 
@@ -32,4 +32,15 @@ public class EmployeeSubsectionStatus {
 
     private LocalDate completedDate;
 
+    @Override
+    public String toString() {
+        return "EmployeeSubsectionStatus{" +
+                "id=" + id +
+                ", employee=" + employee.getLastName() +
+                ", subsection=" + subsection.getDescription() +
+                ", status='" + status + '\'' +
+                ", startDate=" + startDate +
+                ", completedDate=" + completedDate +
+                '}';
+    }
 }

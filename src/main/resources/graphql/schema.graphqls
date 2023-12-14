@@ -8,6 +8,7 @@ type Query {
 	employeeFlowsById(id :ID): [EmployeeFlow]
 	allFlows: [Flow]
 	allFlowsSections: [FlowSection]
+	allEmployeeSubsectionStatuses: [EmployeeSubsectionStatus]
 }
 
 type Mutation {
@@ -24,6 +25,8 @@ type Mutation {
 	deleteFlowSection(flowSectionId: ID): Boolean
 	upsertEmployeeFlow(form: EmployeeFlowForm): EmployeeFlow
 	deleteEmployeeFlow(employeeFlowId: ID): Boolean
+	upsertEmployeeSubsectionStatus(form: EmployeeSubsectionStatusForm): EmployeeSubsectionStatus
+	deleteEmployeeSubsectionStatus(employeeSubsectionStatusId: ID): Boolean
 }
 
 type Employee {
@@ -40,6 +43,7 @@ type Employee {
 	yearsOfExperience: Int
 	contacts: [Contact]
 	addresses: [Address]
+	employeeSubsectionStatuses: [EmployeeSubsectionStatus]
 }
 
 type Contact {
@@ -95,12 +99,11 @@ type EmployeeFlow {
 	sortOrder: Int
 }
 
-input EmployeeSubsectionStatus{
+type EmployeeSubsectionStatus {
 	id: ID
-	employeeId: ID
-	subsectionId: ID
+	employee: Employee
+	subsection: Subsection
 	status: String
-	passFailFlag: String
 	startDate: String
 	completedDate: String
 }
@@ -168,4 +171,13 @@ input EmployeeFlowForm {
 	flowId: ID
 	employeeId: ID
 	sortOrder: Int
+}
+
+input EmployeeSubsectionStatusForm{
+	id: ID
+	employeeId: ID
+	subsectionId: ID
+	status: String
+	startDate: String
+	completedDate: String
 }

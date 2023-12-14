@@ -86,6 +86,9 @@ public class Employee {
 
 	@OneToMany(mappedBy="employee", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<EmployeeFlow> employeeFlows = new ArrayList<>();
+
+	@OneToMany(mappedBy="employee", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<EmployeeSubsectionStatus> employeeSubsectionStatuses = new ArrayList<>();
 	
 	/**
 	 * Date created

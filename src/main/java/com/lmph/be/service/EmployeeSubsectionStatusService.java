@@ -1,7 +1,12 @@
 package com.lmph.be.service;
 
 import com.lmph.be.dao.EmployeeSubsectionStatusDao;
+import com.lmph.be.dto.EmployeeSubsectionStatusInfo;
 import com.lmph.be.entity.EmployeeSubsectionStatus;
+import com.lmph.be.form.EmployeeSubsectionStatusForm;
+import com.lmph.be.utility.DTOUtil;
+import com.lmph.be.utility.FormUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,7 @@ public class EmployeeSubsectionStatusService {
 
     @Autowired
     public EmployeeSubsectionStatusService(EmployeeSubsectionStatusDao employeeSubsectionStatusDao) {
+        this.employeeSubsectionStatusDao = employeeSubsectionStatusDao;
     }
 
     /**
@@ -21,8 +27,12 @@ public class EmployeeSubsectionStatusService {
      * @since 12-Dec-2023
      * @return
      */
-    public List<EmployeeSubsectionStatus> retrieveAllEmployeeSubsectionStatus(){
-        return this.employeeSubsectionStatusDao.findAll();
+    public List<EmployeeSubsectionStatusInfo> retrieveAllEmployeeSubsectionStatus(){
+
+        List<EmployeeSubsectionStatus> employeeSubsectionStatuses =
+                this.employeeSubsectionStatusDao.findAll();
+
+        return employeeSubsectionStatuses.stream().map(DTOUtil::fromEntityToInfo).toList();
     }
 
     /**
@@ -32,5 +42,18 @@ public class EmployeeSubsectionStatusService {
      */
     public List<EmployeeSubsectionStatus> retrieveEmployeeSubsectionStatusByEmployeeId(Long employeeId){
         return this.employeeSubsectionStatusDao.findByemployeeId(employeeId);
+    }
+
+    public EmployeeSubsectionStatusInfo upsertEmployeeSubsectionStatus(EmployeeSubsectionStatusForm form) {
+        EmployeeSubsectionStatus entity = FormUtil.fromFormToEntity(form);
+        EmployeeSubsectionStatusInfo info = new EmployeeSubsectionStatusInfo();
+
+        entity = this.employeeSubsectionStatusDao.save(entity);
+
+        return DTOUtil.fromEntityToInfo(entity);
+    }
+
+    public void deleteEmployeeSubsectionStatus(Long id){
+        this.employeeSubsectionStatusDao.deleteById(id);
     }
 }

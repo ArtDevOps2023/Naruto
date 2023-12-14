@@ -3,9 +3,14 @@ package com.lmph.be.controller;
 import java.util.List;
 
 import com.lmph.be.dto.EmployeeFlowInfo;
+import com.lmph.be.dto.EmployeeSubsectionStatusInfo;
 import com.lmph.be.dto.FlowInfo;
+import com.lmph.be.entity.EmployeeFlow;
+import com.lmph.be.entity.EmployeeSubsectionStatus;
 import com.lmph.be.form.EmployeeFlowForm;
+import com.lmph.be.form.EmployeeSubsectionStatusForm;
 import com.lmph.be.service.EmployeeFlowService;
+import com.lmph.be.service.EmployeeSubsectionStatusService;
 import com.lmph.be.service.FlowService;
 import com.lmph.be.utility.ControllerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +46,10 @@ public class EmployeeController {
 
 	@Autowired
 	private FlowService flowService;
-	
+
+	@Autowired
+	private EmployeeSubsectionStatusService employeeSubsectionStatusService;
+
 	/**
 	 * GraphQL controller for fetching single employee
 	 * @param id
@@ -134,6 +142,10 @@ public class EmployeeController {
 		}
 	}
 
+	@QueryMapping
+	public List<EmployeeSubsectionStatusInfo> allEmployeeSubsectionStatuses(){
+		return this.employeeSubsectionStatusService.retrieveAllEmployeeSubsectionStatus();
+	}
 
 	@MutationMapping
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -149,4 +161,35 @@ public class EmployeeController {
 			return false;
 		}
 	}
+
+	@MutationMapping
+	public EmployeeSubsectionStatusInfo upsertEmployeeSubsectionStatus(@Argument EmployeeSubsectionStatusForm form){
+		try{
+			if(form != null)
+				return this.employeeSubsectionStatusService.upsertEmployeeSubsectionStatus(form);
+			else
+				throw new Exception("Employee Subsection Status is null.");
+		}
+		catch(Exception ex){
+			System.out.println(ex.getMessage());
+			return null;
+		}
+
+	}
+
+	@MutationMapping
+	public Boolean deleteEmployeeSubsectionStatus(@Argument Long employeeSubsectionStatusId){
+		try {
+			if(employeeSubsectionStatusId != null)
+				this.employeeSubsectionStatusService.deleteEmployeeSubsectionStatus(employeeSubsectionStatusId);
+			else
+				throw new Exception("Employee Flow ID is null.");
+
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+
+
 }

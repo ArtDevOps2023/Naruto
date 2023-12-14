@@ -126,4 +126,12 @@ public class DTOUtil {
         return flowInfo;
     }
 
+    public static EmployeeSubsectionStatusInfo fromEntityToInfo(EmployeeSubsectionStatus entity){
+        EmployeeSubsectionStatusInfo info = new EmployeeSubsectionStatusInfo();
+
+        BeanUtils.copyProperties(entity, info);
+
+        return info;
+    }
+
 }
