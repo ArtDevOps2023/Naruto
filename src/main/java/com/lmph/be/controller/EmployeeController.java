@@ -108,8 +108,10 @@ public class EmployeeController {
 								   RedirectAttributes redirectAttributes){
 
 		try {
-			if(employeeInfo.getEmployeeFlowInfos() != null && !employeeInfo.getEmployeeFlowInfos().isEmpty())
+			if(employeeInfo.getId() != null && employeeInfo.getEmployeeFlowInfos() != null) {
+				this.employeeFlowService.deleteEmployeeFlow(employeeInfo.getId());
 				this.employeeFlowService.upsertEmployeeFlows(employeeInfo.getEmployeeFlowInfos());
+			}
 
 			redirectAttributes.addFlashAttribute("customMessage",
 					"Onboarding Flow for "+ employeeInfo.getFullName() +" successfully configured.");

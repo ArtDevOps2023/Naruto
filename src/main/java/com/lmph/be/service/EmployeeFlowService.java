@@ -9,6 +9,7 @@ import com.lmph.be.utility.FormUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class EmployeeFlowService {
      * @since 11-Dec-2023
      * @param employeeId
      */
+    @Transactional
     public void deleteEmployeeFlow(Long employeeId){
         this.employeeFlowDao.deleteByemployeeId(employeeId);
     }

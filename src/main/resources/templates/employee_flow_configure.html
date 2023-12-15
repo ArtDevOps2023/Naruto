@@ -19,6 +19,7 @@
 				<div class="col">
 
 					<input type="hidden" th:field="${emp.id}" th:value="${emp.id}"/>
+					<input type="hidden" th:name="employee.id" th:value="${emp.id}"/>
 					<input type="hidden" th:field="${emp.firstName}" th:value="${emp.firstName}"/>
 					<input type="hidden" th:field="${emp.middleName}" th:value="${emp.middleName}"/>
 					<input type="hidden" th:field="${emp.lastName}" th:value="${emp.lastName}"/>
@@ -52,7 +53,7 @@
 								</select>
 
 								<div class="col-1">
-									<a class="btn btn-danger btn-sm" href="#" onclick="javascript:removeStep(this);">Remove</a>
+									<a class="btn btn-danger btn-sm" href="#" onclick="javascript:removeFlow(this);">Remove</a>
 								</div>
 							</div>
 
@@ -60,7 +61,7 @@
 
 					<div class="form-row" id="addButton">
 						<div class="offset-10 col">
-							<a class="btn btn-sm btn-info" href="#" onclick="javascript:addStep();">Add Step</a>
+							<a class="btn btn-sm btn-info" href="#" onclick="javascript:addFlow();">Add Flow</a>
 						</div>
 					</div>
 				</div>
@@ -80,7 +81,7 @@
 <!--Any JavaScript statement can go here.
 Can have as many <script> tag as needed. -->
 	<script>
-		function addStep(){
+		function addFlow(){
 			let counter_tracker = parseInt($('[name=counter_tracker]').val());
 			let hiddenSelectControl = $('#hiddenSelectControl').clone();
 			let nextIndex = counter_tracker;
@@ -96,7 +97,7 @@ Can have as many <script> tag as needed. -->
 				'<label for="employeeFlowInfos['+ nextIndex +'].flow.flowId" class="col-form-label col-2">Flow <span>'+ nextCount +'</span> :</label>';
 
 			let removeSection = 
-				'<div class="col-1"><a class="btn btn-danger btn-sm" href="#" onclick="javascript:removeStep(this);">Remove</a></div>';
+				'<div class="col-1"><a class="btn btn-danger btn-sm" href="#" onclick="javascript:removeFlow(this);">Remove</a></div>';
 
 			hiddenSelectControl.attr('name', 'employeeFlowInfos['+ nextIndex +'].flow.flowId');
 			hiddenSelectControl.removeClass('d-none');
@@ -114,7 +115,7 @@ Can have as many <script> tag as needed. -->
 			
 		}
 
-		function removeStep(e){
+		function removeFlow(e){
 			let thisControl = $(e);
 			let customStepElementParent = $(thisControl).parent().parent();
 			customStepElementParent.remove();
