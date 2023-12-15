@@ -6,108 +6,134 @@
 
 	<th:block th:each="empFlow : ${empFlows}">
 
-		<div class="card shadow mb-3">
+		<th:block th:if="${#lists.size(empFlow.flow.flowSections) > 0}">
 
-			<div class="card-header text-center">
-				<span class="h3 mb-0 text-gray-800" th:text="${empFlow.flow.name}"></span>
-			</div>
+			<div class="card shadow mb-3">
 
-			<div class="card-body">
+				<div class="card-header text-center">
+					<span class="h3 mb-0 text-gray-800" th:text="${empFlow.flow.name}"></span>
+				</div>
 
-				<th:block th:each="fSec : ${empFlow.flow.flowSections}">
+				<div class="card-body">
 
-					<div class="card mb-3" th:each="sec : ${fSec.section}">
+					<th:block th:each="fSec : ${empFlow.flow.flowSections}">
 
-						<th:block th:unless="${empFlow.flow.name == sec.name}">
-							<!--Section-->
-							<div class="card-header">
-								<span class="h3 mb-0 text-gray-800" th:text="${sec.name}"></span>
-							</div>
-						</th:block>
-						<div class="card-body">
-							<table class="table table-bordered">
-								<colgroup>
-									<col>
-									<col>
-									<col style="width: 10%;">
-									<col style="width: 5%;">
-									<col style="width: 7%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-								</colgroup>
-								<thead class="text-center">
-									<th>Description</th>
-									<th>Details</th>
-									<th>Facilitator</th>
-									<th>Target Day</th>
-									<th>Target Sprint</th>
-									<th>Status</th>
-									<th>Start Date</th>
-									<th>Completed Date</th>
-								</thead>
-								<tbody>
-								<tr th:each="sub : ${sec.subsectionList}">
-									<td th:text="${sub.description}"></td>
-									<td th:text="${sub.details}"></td>
-									<td th:text="${sub.facilitator}"></td>
-									<td th:text="${sub.targetDay}"></td>
-									<td th:text="${sub.targetSprint}"></td>
-									<td th:class="|employee-subsection-control-status-${sub.subsectionId}|">
-										<input type="hidden" name="subsection_id" th:value="${sub.subsectionId}"/>
-										<input type="hidden" name="employee_id" th:value="${empFlow.employee.id}"/>
+						<div class="card mb-3" th:each="sec : ${fSec.section}">
 
-										<!--TODO JJJ: use Status enum-->
-										<select class="form-control d-none" name="status">
-											<option value=""></option>
-											<option value="Pending">Pending</option>
-											<option value="Ongoing">Ongoing</option>
-											<option value="Done">Done</option>
-										</select>
+	<!--						<th:block th:unless="${empFlow.flow.name == sec.name}">-->
 
-										<div class="d-flex justify-content-center cell-spinner">
-											<div class="spinner-border spinner-border-sm" role="status">
-											  <span class="sr-only">Loading...</span>
-											</div>
+								<!--Section-->
+								<th:block th:switch="${sec.color}">
+									<th:block th:case="'B'">
+										<div class="card-header bg-info">
+											<span class="h3 mb-0 text-white" th:text="${sec.name}"></span>
 										</div>
-									</td>
-									<td th:class="|employee-subsection-control-start-date-${sub.subsectionId}|">
-										<input type="hidden" name="subsection_id" th:value="${sub.subsectionId}"/>
-										<input type="hidden" name="employee_id" th:value="${empFlow.employee.id}"/>
-										
-										<input type="date" name="startDate" class="form-control d-none">
+									</th:block>
+									<th:block th:case="'G'">
+										<div class="card-header bg-success">
+											<span class="h3 mb-0 text-white" th:text="${sec.name}"></span>
+										</div>
+									</th:block>
+									<th:block th:case="'Y'">
+										<div class="card-header bg-warning">
+											<span class="h3 mb-0 text-white" th:text="${sec.name}"></span>
+										</div>
+									</th:block>
 
-										<div class="d-flex justify-content-center cell-spinner">
-											<div class="spinner-border spinner-border-sm" role="status">
-											  <span class="sr-only">Loading...</span>
+									<th:block th:case="*">
+										<div class="card-header">
+											<span class="h3 mb-0 text-white" th:text="${sec.name}"></span>
+										</div>
+									</th:block>
+								</th:block>
+	<!--						</th:block>-->
+
+							<div class="card-body">
+								<table class="table table-bordered">
+									<colgroup>
+										<col>
+										<col>
+										<col style="width: 10%;">
+										<col style="width: 5%;">
+										<col style="width: 7%;">
+										<col style="width: 10%;">
+										<col style="width: 10%;">
+										<col style="width: 10%;">
+									</colgroup>
+									<thead class="text-center">
+										<th>Description</th>
+										<th>Details</th>
+										<th>Facilitator</th>
+										<th>Target Day</th>
+										<th>Target Sprint</th>
+										<th>Status</th>
+										<th>Start Date</th>
+										<th>Completed Date</th>
+									</thead>
+									<tbody>
+									<tr th:each="sub : ${sec.subsectionList}">
+										<td th:text="${sub.description}"></td>
+										<td th:text="${sub.details}"></td>
+										<td th:text="${sub.facilitator}"></td>
+										<td th:text="${sub.targetDay}"></td>
+										<td th:text="${sub.targetSprint}"></td>
+										<td th:class="|employee-subsection-control-status-${sub.subsectionId}|">
+											<input type="hidden" name="subsection_id" th:value="${sub.subsectionId}"/>
+											<input type="hidden" name="employee_id" th:value="${empFlow.employee.id}"/>
+
+											<!--TODO JJJ: use Status enum-->
+											<select class="form-control d-none" name="status">
+												<option value=""></option>
+												<option value="Pending">Pending</option>
+												<option value="Ongoing">Ongoing</option>
+												<option value="Done">Done</option>
+											</select>
+
+											<div class="d-flex justify-content-center cell-spinner">
+												<div class="spinner-border spinner-border-sm" role="status">
+												  <span class="sr-only">Loading...</span>
+												</div>
 											</div>
-										  </div>
-									</td>
-									<td th:class="|employee-subsection-control-completed-date-${sub.subsectionId}|">
-										<input type="hidden" name="subsection_id" th:value="${sub.subsectionId}"/>
-										<input type="hidden" name="employee_id" th:value="${empFlow.employee.id}"/>
+										</td>
+										<td th:class="|employee-subsection-control-start-date-${sub.subsectionId}|">
+											<input type="hidden" name="subsection_id" th:value="${sub.subsectionId}"/>
+											<input type="hidden" name="employee_id" th:value="${empFlow.employee.id}"/>
 
-										<input type="date" name="completedDate" class="form-control d-none">
+											<input type="date" name="startDate" class="form-control d-none">
 
-										<div class="d-flex justify-content-center cell-spinner">
-											<div class="spinner-border spinner-border-sm" role="status">
-											  <span class="sr-only">Loading...</span>
-											</div>
-										  </div>
-										
-									</td>
-								</tr>
-								</tbody>
-							</table>
+											<div class="d-flex justify-content-center cell-spinner">
+												<div class="spinner-border spinner-border-sm" role="status">
+												  <span class="sr-only">Loading...</span>
+												</div>
+											  </div>
+										</td>
+										<td th:class="|employee-subsection-control-completed-date-${sub.subsectionId}|">
+											<input type="hidden" name="subsection_id" th:value="${sub.subsectionId}"/>
+											<input type="hidden" name="employee_id" th:value="${empFlow.employee.id}"/>
 
+											<input type="date" name="completedDate" class="form-control d-none">
+
+											<div class="d-flex justify-content-center cell-spinner">
+												<div class="spinner-border spinner-border-sm" role="status">
+												  <span class="sr-only">Loading...</span>
+												</div>
+											  </div>
+
+										</td>
+									</tr>
+									</tbody>
+								</table>
+
+							</div>
 						</div>
-					</div>
 
-				</th:block>
+					</th:block>
+
+				</div>
 
 			</div>
 
-		</div>
+		</th:block>
 
 	</th:block>
 

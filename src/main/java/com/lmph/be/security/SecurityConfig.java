@@ -19,7 +19,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 public class SecurityConfig {
 
 	private final String LOGIN_URL = "/login";
-	private final String HOME_URL = "/home";
+	private final String HOME_URL = "/employees";
 	private final String LOGOUT_URL = "/logout";
 	
 	@Bean

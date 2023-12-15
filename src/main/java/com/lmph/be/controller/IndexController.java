@@ -32,7 +32,7 @@ public class IndexController {
 	public String login() throws Exception {
 				
 		if(SecurityUtil.isAuthenticated()) {
-			return "redirect:/home";
+			return "redirect:/employees";
 		}
 		
 		return "login";
