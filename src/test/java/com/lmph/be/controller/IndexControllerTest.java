@@ -39,7 +39,7 @@ class IndexControllerTest {
 		
 		RequestBuilder request = MockMvcRequestBuilders.get("/login");
 		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(302))
-								.andExpect(redirectedUrl("/home"));
+								.andExpect(redirectedUrl("/employees"));
 	}
 	
 	@Test

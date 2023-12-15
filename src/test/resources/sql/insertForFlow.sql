@@ -1,5 +1,5 @@
 INSERT INTO employees (id, first_name,last_name,middle_name,birthdate,gender,marital_status,company_position,date_hired,created_at,updated_at)
-VALUES (1, 'Jef','Dela Cruz','M','1990-01-01','M','M','Employee','2010-01-01',NULL,NULL);
+VALUES (1, 'Jeff','Dela Cruz','M','1990-01-01','M','M','Employee','2010-01-01',NULL,NULL);
 
 INSERT INTO flow (flow_id, name,created_by) VALUES (1, 'Sample Flow', 'admin');
 
