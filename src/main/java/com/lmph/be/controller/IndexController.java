@@ -1,9 +1,12 @@
 package com.lmph.be.controller;
 
+import com.lmph.be.utility.SecurityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,15 +23,6 @@ import com.lmph.be.form.SubsectionForm;
 @Controller
 public class IndexController {
 
-	private boolean isAuthenticated() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    if (authentication == null || AnonymousAuthenticationToken.class.
-	      isAssignableFrom(authentication.getClass())) {
-	        return false;
-	    }
-	    return authentication.isAuthenticated();
-	}
-	
 	/**
 	 * Login page
 	 * @return
@@ -37,8 +31,8 @@ public class IndexController {
 	@GetMapping("/login")
 	public String login() throws Exception {
 				
-		if(this.isAuthenticated()) {
-			return "redirect:/home";
+		if(SecurityUtil.isAuthenticated()) {
+			return "redirect:/employees";
 		}
 		
 		return "login";
@@ -86,65 +80,4 @@ public class IndexController {
 		return "employee_form";
 	}
 	
-	/**
-	 * Onboarding page
-	 * @return
-	 */
-	@GetMapping("/onboarding")
-	public String onboarding() {
-		return "onboarding";
-	}
-	
-	/**
-	 * Display Sections and Add Section form
-	 * @param sectionForm
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	@GetMapping("/onboarding/section")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String sectionForm(@ModelAttribute("sectionForm") SectionForm sectionForm) {
-		return "section_form";
-	}
-	
-	/**
-	 * Edit Section form
-	 * @param sectionId
-	 * @param sectionForm
-	 * @return
-	 */
-	@GetMapping("/onboarding/section/{sectionId}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String sectionForm(@PathVariable Long sectionId, @ModelAttribute("sectionForm") SectionForm sectionForm) {
-		sectionForm.setSectionId(sectionId);	
-		return "section_form";
-	}
-	
-	/**
-	 * Add Subsection form
-	 * @param sectionId
-	 * @param subsectionForm
-	 * @return
-	 */
-	@GetMapping("/onboarding/section/{sectionId}/subsection")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String subsectionForm(@PathVariable Long sectionId, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
-		subsectionForm.setSectionId(sectionId);		
-		return "subsection_form";
-	}
-	
-	/**
-	 * Edit Subsection form
-	 * @param sectionId
-	 * @param subsectionId
-	 * @param subsectionForm
-	 * @return
-	 */
-	@GetMapping("/onboarding/section/{sectionId}/subsection/{subsectionId}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String subsectionForm(@PathVariable Long sectionId, @PathVariable Long subsectionId, @ModelAttribute("subsectionForm") SubsectionForm subsectionForm) {
-		subsectionForm.setSectionId(sectionId);	
-		subsectionForm.setSubsectionId(subsectionId);
-		return "subsection_form";
-	}
 }

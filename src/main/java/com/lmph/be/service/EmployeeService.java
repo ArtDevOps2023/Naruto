@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.lmph.be.utility.DTOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,11 @@ public class EmployeeService {
 			EmployeeInfo employeeInfo = new EmployeeInfo();
 			Employee employee = this.employeeDao.findById(id).get();
 			BeanUtils.copyProperties(employee, employeeInfo);
-			return employeeInfo;	
+
+			employeeInfo.setEmployeeFlowInfos(
+					employee.getEmployeeFlows().stream().map(DTOUtil::toEmployeeFlowInfo).toList());
+
+			return employeeInfo;
 		}
 		else {
 			return null;

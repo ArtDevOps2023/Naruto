@@ -60,5 +60,11 @@ public class Section {
 	 */
 	@OneToMany(mappedBy="section", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Subsection> subsectionList = new ArrayList<>();
-	 
+
+
+	public Section(Long sectionId) {
+		this.sectionId = sectionId;
+	}
+
+	public Section(){}
 }

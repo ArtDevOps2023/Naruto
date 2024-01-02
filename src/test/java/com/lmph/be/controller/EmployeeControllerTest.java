@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 
+import com.lmph.be.service.EmployeeFlowService;
+import com.lmph.be.service.FlowService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,12 @@ class EmployeeControllerTest {
 	
 	@MockBean
 	private EmployeeService employeeService;
+
+	@MockBean
+	private EmployeeFlowService employeeFlowService;
+
+	@MockBean
+	private FlowService flowService;
 	
 	@Test
 	@WithMockUser(username = "user", roles = {"USER"})
@@ -54,6 +62,29 @@ class EmployeeControllerTest {
 		RequestBuilder request = MockMvcRequestBuilders.delete("/employees/1");
 		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(405));
 	}
-	
+
+	@Test
+	@WithMockUser(username = "user", roles = {"USER"})
+	public void flowView_hasUserRoleStatusOk() throws Exception {
+
+		RequestBuilder request = MockMvcRequestBuilders.get("/employee/flow/view/1");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(200));
+	}
+
+	@Test
+	@WithMockUser(username = "user", roles = {"USER"})
+	public void flowConfigure_hasUserRoleStatusNotFound() throws Exception {
+
+		RequestBuilder request = MockMvcRequestBuilders.get("/employee/flow/configure/1");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(403));
+	}
+
+	@Test
+	@WithMockUser(username = "user", roles = {"USER"})
+	public void flowSave_hasUserRoleStatusNotFound() throws Exception {
+
+		RequestBuilder request = MockMvcRequestBuilders.post("/employee/flow/save");
+		mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
+	}
 	
 }

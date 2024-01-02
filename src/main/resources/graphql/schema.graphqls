@@ -4,6 +4,12 @@ type Query {
     section: [Section]
     sectionBySectionId(sectionId: ID): Section
     subsection: [Subsection]
+	#JJJ: Flow, FlowSections, EmployeeFlow queries
+	employeeFlowsById(id :ID): [EmployeeFlow]
+	allFlows: [Flow]
+	allFlowsSections: [FlowSection]
+	allEmployeeSubsectionStatuses: [EmployeeSubsectionStatus]
+	allEmployeeSubsectionStatusesById(id: ID): [EmployeeSubsectionStatus]
 }
 
 type Mutation {
@@ -13,6 +19,15 @@ type Mutation {
 	deleteSection(sectionId: ID!): Boolean
 	upsertSubsection(form: SubsectionForm): Subsection
 	deleteSubsection(subsectionId: ID!): Boolean
+	#JJJ: Flow, FlowSections, EmployeeFlow mutations
+	upsertFlow(form: FlowForm): Flow
+	deleteFlow(flowId: ID): Boolean
+	upsertFlowSection(form: FlowSectionForm): FlowSection
+	deleteFlowSection(flowSectionId: ID): Boolean
+	upsertEmployeeFlow(form: EmployeeFlowForm): EmployeeFlow
+	deleteEmployeeFlow(employeeFlowId: ID): Boolean
+	upsertEmployeeSubsectionStatus(form: EmployeeSubsectionStatusForm): EmployeeSubsectionStatus
+	deleteEmployeeSubsectionStatus(employeeSubsectionStatusId: ID): Boolean
 }
 
 type Employee {
@@ -29,6 +44,7 @@ type Employee {
 	yearsOfExperience: Int
 	contacts: [Contact]
 	addresses: [Address]
+	employeeSubsectionStatuses: [EmployeeSubsectionStatus]
 }
 
 type Contact {
@@ -62,6 +78,36 @@ type Subsection {
 	targetSprint: String
 }
 
+type Flow {
+	flowId: ID
+	name: ID
+	flowSections: [FlowSection]
+	createdBy: String
+	createdDate: String
+}
+
+type FlowSection {
+	id: ID
+	section: Section
+	flow: Flow
+	sortOrder: Int
+}
+
+type EmployeeFlow {
+	id: ID
+	employee: Employee
+	flow:  Flow
+	sortOrder: Int
+}
+
+type EmployeeSubsectionStatus {
+	id: ID
+	employee: Employee
+	subsection: Subsection
+	status: String
+	startDate: String
+	completedDate: String
+}
 
 input EmployeeForm {
     id: ID
@@ -106,4 +152,33 @@ input SubsectionForm {
 	details: String
 	targetDay: String
 	targetSprint: String
+}
+
+input FlowForm {
+	flowId: ID
+	name: String
+	color: String
+}
+
+input FlowSectionForm {
+	flowSectionId: ID
+	flowId: ID
+	sectionId: ID
+	sortOrder: Int
+}
+
+input EmployeeFlowForm {
+	id: ID
+	flowId: ID
+	employeeId: ID
+	sortOrder: Int
+}
+
+input EmployeeSubsectionStatusForm{
+	id: ID
+	employeeId: ID
+	subsectionId: ID
+	status: String
+	startDate: String
+	completedDate: String
 }

@@ -82,6 +82,10 @@ public class Employee {
 	 */
 	@OneToMany(mappedBy="employee", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Address> addresses = new ArrayList<>();
+
+
+	@OneToMany(mappedBy="employee", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<EmployeeFlow> employeeFlows = new ArrayList<>();
 	
 	/**
 	 * Date created
@@ -92,5 +96,21 @@ public class Employee {
 	 * Date updated
 	 */
 	private LocalDateTime updatedAt;
-	
+
+	public Employee() {
+	}
+
+	public Employee(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", middleName='" + middleName + '\'' +
+				'}';
+	}
 }

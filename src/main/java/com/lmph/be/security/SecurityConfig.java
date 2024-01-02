@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 
 @Configuration
@@ -18,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	private final String LOGIN_URL = "/login";
-	private final String HOME_URL = "/home";
+	private final String HOME_URL = "/employees";
 	private final String LOGOUT_URL = "/logout";
 	
 	@Bean

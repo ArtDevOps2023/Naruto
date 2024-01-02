@@ -82,6 +82,8 @@ public class EmployeeInfo  {
 	 * Date updated
 	 */
 	private LocalDateTime updatedAt;
+
+	private List<EmployeeFlowInfo> employeeFlowInfos = new ArrayList<>();
 	
 	public Integer getAge() {
 		
@@ -100,6 +102,10 @@ public class EmployeeInfo  {
 		}
 		
 		return 0;
+	}
+
+	public String getFullName() {
+		return firstName + " " + middleName + " " + lastName;
 	}
 
 }
